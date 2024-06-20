@@ -15,7 +15,7 @@ class IsSellerMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user->role == \App\Models\User::$SELLER) {
+        if(auth()->user()->role == \App\Models\User::$SELLER) {
             return $next($request);
         }
 
