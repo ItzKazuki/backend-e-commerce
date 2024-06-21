@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
+use App\Http\Controllers\Admin\UploadController;
 
 /**
  * Register seller
@@ -38,10 +39,12 @@ Route::prefix('admin')->group(function() {
             ]);
         })->name('profile');
 
+        Route::get('uploads', [UploadController::class, 'index'])->name('uploads.index');
+        Route::get('uploads/{id}', [UploadController::class, 'show'])->name('uploads.show');
+        Route::delete('uploads/{id}', [UploadController::class, 'destroy'])->name('uploads.destroy');
+
         Route::resource('orders', OrdersController::class);
-
         Route::resource('sellers', SellerController::class);
-
         Route::resource('users', UserController::class);
         // Route::prefix('users')->group(function() {
         //     Route::get('/', [UserController::class, 'index']);

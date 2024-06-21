@@ -15,6 +15,10 @@ class Upload extends Model
     ];
 
     public function product() {
-        return $this->hasOne(Product::class);
+        return $this->HasOne(Product::class);
+    }
+
+    public function user() {
+        return $this->hasMany(User::class, 'user_id');
     }
 }

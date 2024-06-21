@@ -22,6 +22,14 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
+        User::factory()->create([
+            'name' => 'Ucup',
+            'email' => 'ucup@account.com',
+            'phone' => '6258954384758',
+            'role' => 'seller',
+            'password' => Hash::make('password')
+        ]);
+
         User::factory(10)->create();
     }
 }
