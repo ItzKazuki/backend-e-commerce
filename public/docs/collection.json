@@ -1,0 +1,532 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8000"
+        }
+    ],
+    "info": {
+        "name": "EdenShop",
+        "_postman_id": "3b259acf-3764-4f09-b787-865281a2e122",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "POST api\/v1\/auth\/login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/v1\/auth\/register",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST api\/v1\/auth\/logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/products"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"products\":[{\"id\":\"9c57884c-11ae-4642-bef3-5e42722a5a84\",\"seller_id\":\"9c57872e-9440-443d-9801-dcfd8d2fe537\",\"upload_id\":\"UP-6675D27B4C090\",\"product_name\":\"Miku\",\"product_desc\":\"minuman susu dengan berbagai varian rasa\",\"stock\":11,\"price\":\"50000\",\"brand\":\"Mayora\",\"created_at\":\"2024-06-21T19:20:27.000000Z\",\"updated_at\":\"2024-06-21T19:23:56.000000Z\",\"upload\":{\"id\":\"UP-6675D27B4C090\",\"user_id\":\"9c57872e-9440-443d-9801-dcfd8d2fe537\",\"image\":\"http:\\\/\\\/localhost:8000\\\/storage\\\/products\\\/aJsrpPLjVypsw9JGl8hXBo0PL2r67466YVaCcxMn.jpg\",\"created_at\":\"2024-06-21T19:20:27.000000Z\",\"updated_at\":\"2024-06-21T19:20:27.000000Z\"},\"seller\":{\"id\":\"9c57872e-9440-443d-9801-dcfd8d2fe537\",\"name\":\"Yahya\",\"about\":null,\"email\":\"aya@account.com\",\"phone\":\"62899966435536\",\"role\":\"seller\",\"email_verified_at\":\"2024-06-21T19:17:20.000000Z\",\"address\":null,\"avatar_url\":\"https:\\\/\\\/www.gravatar.com\\\/avatar\\\/f214191b712acbb4095ee1f1466033b8\",\"created_at\":\"2024-06-21T19:17:20.000000Z\",\"updated_at\":\"2024-06-21T19:17:20.000000Z\"}},{\"id\":\"9c5788e0-4094-49b6-82a7-f88d6162ac47\",\"seller_id\":\"9c57872d-52b1-4085-8420-980e95ac411f\",\"upload_id\":\"UP-6675D2DC778D9\",\"product_name\":\"Bengbeng\",\"product_desc\":\"Snack krunchy dengan lapisan karamel yang enak\",\"stock\":11,\"price\":\"25000\",\"brand\":\"Mayora\",\"created_at\":\"2024-06-21T19:22:04.000000Z\",\"updated_at\":\"2024-06-21T19:24:34.000000Z\",\"upload\":{\"id\":\"UP-6675D2DC778D9\",\"user_id\":\"9c57872d-52b1-4085-8420-980e95ac411f\",\"image\":\"http:\\\/\\\/localhost:8000\\\/storage\\\/products\\\/AAB2ldRTTHV8rkfP1cA9ZJrI5YapMVB4Kb6cwVVG.jpg\",\"created_at\":\"2024-06-21T19:22:04.000000Z\",\"updated_at\":\"2024-06-21T19:22:04.000000Z\"},\"seller\":{\"id\":\"9c57872d-52b1-4085-8420-980e95ac411f\",\"name\":\"Ucup\",\"about\":null,\"email\":\"ucup@account.com\",\"phone\":\"6258954384758\",\"role\":\"seller\",\"email_verified_at\":\"2024-06-21T19:17:19.000000Z\",\"address\":null,\"avatar_url\":\"https:\\\/\\\/www.gravatar.com\\\/avatar\\\/c967e0eef29cb6a6e344bdd10480d178\",\"created_at\":\"2024-06-21T19:17:19.000000Z\",\"updated_at\":\"2024-06-21T19:17:19.000000Z\"}}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9c57884c-11ae-4642-bef3-5e42722a5a84",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"product\":{\"id\":\"9c57884c-11ae-4642-bef3-5e42722a5a84\",\"seller_id\":\"9c57872e-9440-443d-9801-dcfd8d2fe537\",\"upload_id\":\"UP-6675D27B4C090\",\"product_name\":\"Miku\",\"product_desc\":\"minuman susu dengan berbagai varian rasa\",\"stock\":11,\"price\":\"50000\",\"brand\":\"Mayora\",\"created_at\":\"2024-06-21T19:20:27.000000Z\",\"updated_at\":\"2024-06-21T19:23:56.000000Z\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display a listing of the resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/orders"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specified resource.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/orders\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/orders\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "totam",
+                                    "description": "The ID of the order."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/orders\/create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/orders\/create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Store a newly created resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/products\/create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/products\/create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9c57884c-11ae-4642-bef3-5e42722a5a84",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified resource from storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9c57884c-11ae-4642-bef3-5e42722a5a84",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET api\/v1\/seller\/orders",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/orders"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified resource in storage.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/orders\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/orders\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "dolor",
+                                    "description": "The ID of the order."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}
