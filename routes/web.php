@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
-use App\Http\Controllers\Admin\Auth\RegisterController;
 
 /**
  * Register seller

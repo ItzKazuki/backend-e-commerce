@@ -56,6 +56,12 @@ class User extends Authenticatable
         ];
     }
 
+    public static function booted()
+    {
+        static::creating(fn ($user) => $user->forceFill(['avatar_url' => "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->email ) ) )]));
+        static::updated(fn ($user) => $user->forceFill(['avatar_url' => "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->email ) ) )]));
+    }
+
     public function product() {
         return $this->hasMany(Product::class);
     }

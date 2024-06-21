@@ -19,34 +19,19 @@ class OrdersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
-    }
+        try {
+            $order = Order::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            return $this->sendRes([
+                'order' => $order
+            ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        } catch (\Exception $e) {
+            return $this->sendFailRes($e, 401);
+        }
     }
 }

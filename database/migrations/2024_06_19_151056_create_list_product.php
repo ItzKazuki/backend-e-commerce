@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('brand');
             $table->foreign('seller_id')->references('id')->on('users');
             $table->foreign('upload_id')->references('id')->on('uploads');
+            $table->timestamps();
         });
     }
 

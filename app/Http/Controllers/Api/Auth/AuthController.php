@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Exception;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -36,7 +36,6 @@ class AuthController extends Controller
 
     public function login(Request $request) {
         try {
-
             //validasi form/input
             $request->validate([
                 'email' => 'required|min:3|max:40|string',

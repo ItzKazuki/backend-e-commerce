@@ -70,16 +70,38 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $userData = $request->validate([
+            'name' => 'required|min:3|max:60',
+            'email' => 'required|email',
+            'phone' => 'required|string',
+            'password' => '',
+            'role' => 'required'
+        ]);
+
+        if(isset($userData['password'])) {
+            $userData['password'] = Hash::make($request->password);
+            $user->password = $userData['password'];
+        }
+
+        $user->name = $userData['name'];
+        $user->email = $userData['email'];
+        $user->phone = $userData['phone'];
+        $user->role = $userData['role'];
+
+        $user->save();
+
+        return redirect()->route('users.index')->with('success', 'Success Update Account');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'Success Delete User');
     }
 }

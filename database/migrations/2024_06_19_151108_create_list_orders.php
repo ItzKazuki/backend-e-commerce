@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('state');
             $table->string('zip_code');
             $table->foreign('customer_id')->references('id')->on('users');
+            $table->timestamps();
         });
     }
 

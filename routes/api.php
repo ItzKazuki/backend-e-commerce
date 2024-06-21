@@ -80,41 +80,10 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [SellerProductController::class, 'destroy']);
         });
 
-        Route::prefix('products')->group(function () {
+        Route::prefix('orders')->group(function () {
             Route::get('/', [OrdersController::class, 'index']);
             Route::get('/{id}', [OrdersController::class, 'show']);
             Route::put('/{id}', [SellerOrdersController::class, 'update']);
         });
-    });
-
-    /**
-     * Admin Dashboard
-     */
-    Route::prefix('admin')->middleware([IsAdminMiddleware::class, 'auth:sanctum'])->group(function () {
-        // add seller
-        Route::prefix('seller')->group(function () {
-            Route::get('/', [SellerController::class, 'index']); // get all seller
-            Route::get('/{id}', [SellerController::class, 'show']);
-            Route::post('/create', [SellerController::class, 'store']);
-            Route::put('/{id}', [SellerController::class, 'update']);
-            Route::delete('/{id}', [SellerController::class, 'destroy']);
-        });
-        // manage orders
-        Route::prefix('orders')->group(function () {
-            Route::get('/', [AdminOrdersController::class, 'index']);
-            Route::get('/{id}', [AdminOrdersController::class, 'show']);
-            Route::post('/create', [AdminOrdersController::class, 'store']);
-            Route::put('/{id}', [AdminOrdersController::class, 'update']);
-            Route::delete('/{id}', [AdminOrdersController::class, 'destroy']);
-        });
-        // manage user
-        Route::prefix('users')->group(function () {
-            Route::get('/', [UsersController::class, 'index']);
-            Route::get('/{id}', [UsersController::class, 'show']);
-            Route::post('/create', [UsersController::class, 'store']);
-            Route::put('/{id}', [UsersController::class, 'update']);
-            Route::delete('/{id}', [UsersController::class, 'destroy']);
-        });
-        // manage settings maybe?
     });
 });
