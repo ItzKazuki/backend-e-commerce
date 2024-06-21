@@ -21,6 +21,6 @@ class IsSellerMiddleware
 
         return response()->json([
             'message' => 'Not Allowed'
-        ], 401);
+        ], 405);
     }
 }

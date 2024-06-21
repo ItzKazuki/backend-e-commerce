@@ -10,25 +10,11 @@ class AccountController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return $this->sendRes([
+            'user' => $request->user()
+        ]);
     }
 
     /**
@@ -42,8 +28,17 @@ class AccountController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        // delete account
+        try {
+            $request->user()->delete();
+
+            return $this->sendRes([
+                'message' => 'Account deleted successfully'
+            ]);
+        } catch(\Exception $e) {
+            return $this->sendFailRes($e, 400);
+        }
     }
 }

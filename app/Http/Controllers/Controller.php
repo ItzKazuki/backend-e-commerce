@@ -10,7 +10,7 @@ abstract class Controller
         ], $data), $code);
     }
 
-    public function sendFailRes(\Exception $e, int $code = 401) {
+    public function sendFailRes(\Exception $e, int $code = 400) {
         return response()->json([
             'status' => 'failed',
             'message' => $e->getMessage(),

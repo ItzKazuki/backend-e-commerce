@@ -15,10 +15,10 @@ class AuthController extends Controller
         try {
             $userData = $request->validate([
                 'name' => 'required|min:3|max:70',
-                'nik' => 'required|min:16|max:17|string',
                 'email' => 'required|string|unique:users',
-                'username' => 'required|string|min:3|unique:users',
-                'password' => 'required|min:3'
+                'phone' => 'required',
+                'password' => 'required|min:3',
+                'address' => 'min:3|max:255'
             ]);
 
             // manipulasi object di php
@@ -29,6 +29,7 @@ class AuthController extends Controller
             return $this->sendRes([
                 'message' => 'success create new account, please login first.'
             ]);
+
         } catch (\Exception $e) {
             return $this->sendFailRes($e);
         }
