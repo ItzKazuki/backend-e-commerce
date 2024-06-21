@@ -13,6 +13,7 @@ class Product extends Model
         'product_name',
         'product_desc',
         'price',
+        'stock',
         'brand',
         'seller_id', // ini user yang role nya seller
         'upload_id'

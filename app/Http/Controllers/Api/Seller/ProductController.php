@@ -20,11 +20,12 @@ class ProductController extends Controller
                 'product_name' => 'required',
                 'product_desc' => 'required',
                 'price' => 'required',
+                'stock' => 'required',
                 'brand' => 'required',
                 'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
             ]);
 
-            $imagePath = $request->file('product_image')->store('public/products');
+            $imagePath = $request->file('product_image')->store('products');
 
             $imageUrl = Storage::url($imagePath);
 
@@ -39,6 +40,7 @@ class ProductController extends Controller
                 'product_name' => $productData['product_name'],
                 'product_desc' => $productData['product_desc'],
                 'price' => $productData['price'],
+                'stock' => $productData['stock'],
                 'brand' => $productData['brand'],
                 'seller_id' => $request->user()->id,
                 'upload_id' => $uplaodDetail->id

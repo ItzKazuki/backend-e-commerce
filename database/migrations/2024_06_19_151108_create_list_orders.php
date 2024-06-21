@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_id');
-            $table->string('name');
-            $table->string('address');
-            $table->string('city');
-            $table->string('state');
-            $table->string('zip_code');
+            $table->string('shipping_address');
+            $table->decimal('shipping_cost');
+            $table->string('payment_method');
+            $table->string('order_status');
+            $table->decimal('total_price');
             $table->foreign('customer_id')->references('id')->on('users');
             $table->timestamps();
         });

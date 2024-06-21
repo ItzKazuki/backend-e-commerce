@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('upload_id');
             $table->string('product_name');
             $table->string('product_desc');
+            $table->integer('stock');
             $table->string('price');
             $table->string('brand');
             $table->foreign('seller_id')->references('id')->on('users');
