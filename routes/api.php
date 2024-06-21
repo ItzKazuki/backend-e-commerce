@@ -1,15 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsSellerMiddleware;
 use App\Http\Controllers\Api\OrdersController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\Auth\AuthController;
-use App\Http\Controllers\Api\Admin\UsersController;
-use App\Http\Controllers\Api\Admin\SellerController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
-use App\Http\Controllers\Api\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
 
@@ -81,8 +77,8 @@ Route::prefix('v1')->group(function () {
         });
 
         Route::prefix('orders')->group(function () {
-            Route::get('/', [OrdersController::class, 'index']);
-            Route::get('/{id}', [OrdersController::class, 'show']);
+            Route::get('/', [SellerOrdersController::class, 'index']);
+            Route::get('/{id}', [SellerOrdersController::class, 'show']);
             Route::put('/{id}', [SellerOrdersController::class, 'update']);
         });
     });

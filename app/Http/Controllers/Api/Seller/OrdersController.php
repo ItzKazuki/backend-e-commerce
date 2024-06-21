@@ -3,31 +3,24 @@
 namespace App\Http\Controllers\Api\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function index()
     {
-        //
+        return $this->sendRes([
+            'orders' => Order::whereHas('orderItems.product.seller', function($query) {
+                $query->where('id', auth()->user()->id);
+            })->get()
+        ]);
     }
-
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // TODO: Implement update() method.
     }
 }

@@ -9,6 +9,8 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $with = ['orderItems'];
+    
     protected $fillable = [
         'customer_id',
         'shipping_address',
@@ -18,14 +20,35 @@ class Order extends Model
         'total_price',
     ];
 
-    public $PENDING = 'pending';
-    public $PROCESSING = 'processing';
-    public $SHIPPED = 'shipped';
-    public $DELIVERED = 'delivered';
-    public $CANCELLED = 'cancelled';
+    const PENDING = 'Pending';
+    const PROCESSING = 'Processing';
+    const SHIPPED = 'Shipped';
+    const DELIVERED = 'Delivered';
+    const CANCELLED = 'Cancelled';
+    const SHIPPING_COST = 10000;
+
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($model) {
+            if (empty($model->{$model->getKeyName()})) {
+                $model->{$model->getKeyName()} = 'ORD-' . strtoupper(uniqid()) . '-' . date('Y');
+            }
+        });
+    }
+
 
     public function orderItems()
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
     }
 }

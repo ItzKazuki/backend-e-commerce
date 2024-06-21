@@ -7,5 +7,5 @@ use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
-    //
+    // TODO: add reset password controller
 }

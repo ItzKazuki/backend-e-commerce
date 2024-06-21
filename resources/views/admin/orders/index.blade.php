@@ -1,3 +1,4 @@
+use App\Models\Order;
 @extends('layouts.app')
 
 @section('content')
@@ -21,23 +22,23 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Address</th>
+            <th scope="col">Status</th>
+            <th scope="col">Customer Name</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          {{-- @foreach ($orders as $key => $order)
+          @foreach ($orders as $key => $order)
             <tr>
                 <th scope="row">{{ $key+1 }}</th>
-                <td>{{ $order->name }}</td>
-                <td>{{ ucfirst($order->role) }}</td>
-                <td>{{ $order->phone }}</td>
+                <td>{{ $order->id }}</td>
+                <td>{{ $order->order_status }}</td>
+                <td>{{ $order->user->name }}</td>
                 <td><a href="{{ route('orders.show', ['order' => $order->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
                     <a href="{{ route('orders.edit', ['order' => $order->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
                     <a href="#" class="btn btn-danger btn-sm" title="Remove User"><i class="bi bi-trash"></i></a></td>
             </tr>
-          @endforeach --}}
+          @endforeach
         </tbody>
       </table>
       <!-- End Table with stripped rows -->
