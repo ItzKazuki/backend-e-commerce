@@ -69,6 +69,6 @@ class User extends Authenticatable
     }
 
     public function upload() {
-        return $this->belongsTo(Upload::class);
+        return $this->hasMany(Upload::class);
     }
 }
