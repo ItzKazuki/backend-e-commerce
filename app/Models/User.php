@@ -31,9 +31,9 @@ class User extends Authenticatable
     /**
      *  This var using to define role user, default is customer
      */
-    public static $ADMIN = 'admin';
-    public static $SELLER = 'seller';
-    public static $CUSTOMER = 'customer';
+    const ADMIN = 'admin';
+    const SELLER = 'seller';
+    const CUSTOMER = 'customer';
 
     /**
      * The attributes that should be hidden for serialization.

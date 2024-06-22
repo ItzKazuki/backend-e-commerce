@@ -8,6 +8,8 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
+use App\Http\Controllers\Api\User\AccountController;
+use App\Models\User;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -23,7 +25,7 @@ use App\Http\Controllers\Api\Seller\ProductController as SellerProductController
  */
 
  // versioning path
-Route::prefix('v1')->group(function () {
+Route::prefix('v1')->middleware('api')->group(function () {
     /**
      * Auth Routes, for authentication process
      *
@@ -34,6 +36,11 @@ Route::prefix('v1')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
         Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
+    });
+
+    Route::middleware('auth:sanctum')->get('user', [AccountController::class, 'index']);
+    Route::middleware('auth:sanctum')->get('seller/{id}', function(string $id) {
+        return User::where('role', User::SELLER)->findOrFail($id);
     });
 
     /**

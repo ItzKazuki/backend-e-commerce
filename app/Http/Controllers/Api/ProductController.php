@@ -13,7 +13,7 @@ class ProductController extends Controller
     public function index()
     {
         return $this->sendRes([
-            'products' => Product::with(['upload', 'seller'])->get()
+            'products' => Product::all()
         ]);
     }
 

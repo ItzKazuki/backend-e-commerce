@@ -47,9 +47,9 @@
           <div class="col-sm-10">
             <select class="form-select" id="role" name="role" value="{{ $user->role }}" aria-label="Select Role User">
               <option >Open this select menu</option>
-              <option value="{{ \App\Models\User::$CUSTOMER }}">Customer</option>
-              <option value="{{ \App\Models\User::$SELLER }}">Seller</option>
-              <option value="{{ \App\Models\User::$ADMIN }}">Admin</option>
+              <option value="{{ \App\Models\User::CUSTOMER }}">Customer</option>
+              <option value="{{ \App\Models\User::SELLER }}">Seller</option>
+              <option value="{{ \App\Models\User::ADMIN }}">Admin</option>
             </select>
           </div>
         </div>

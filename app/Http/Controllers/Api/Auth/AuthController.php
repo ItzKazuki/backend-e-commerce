@@ -24,7 +24,7 @@ class AuthController extends Controller
             // manipulasi object di php
             $userData['password'] = Hash::make($request->input('password'));
 
-            $user = User::create($userData);
+            User::create($userData);
 
             return $this->sendRes([
                 'message' => 'success create new account, please login first.'
@@ -66,7 +66,6 @@ class AuthController extends Controller
     public function logout(Request $request) {
         try {
             $request->user()->tokens()->delete();
-
             return $this->sendRes([
                 'message' => 'Success Logout'
             ]);

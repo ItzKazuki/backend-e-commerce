@@ -15,7 +15,7 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->role == \App\Models\User::$ADMIN) {
+        if(auth()->user()->role == \App\Models\User::ADMIN) {
             return $next($request);
         }
 

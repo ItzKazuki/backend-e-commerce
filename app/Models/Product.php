@@ -10,6 +10,8 @@ class Product extends Model
 {
     use HasFactory, HasUuids;
 
+    protected $with = ['upload', 'seller'];
+
     protected $fillable = [
         'product_name',
         'product_desc',

@@ -14,7 +14,7 @@ class SellerController extends Controller
     public function index()
     {
         return view('admin.sellers.index', [
-            'sellers' => User::where('role', User::$SELLER)->get()
+            'sellers' => User::where('role', User::SELLER)->get()
         ]);
     }
 
