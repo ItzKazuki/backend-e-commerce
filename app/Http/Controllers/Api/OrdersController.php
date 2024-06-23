@@ -46,21 +46,19 @@ class OrdersController extends Controller
             // TODO: fix bug , using db transaction
             // validate
             $validateData = $request->validate([
-                'product_id' => 'required|exists:products,id',
-                'quantity' => 'required|integer|min:1'
+                'products' => 'required',
+                'payment_method' => 'required'
             ]);
 
-            $product = Product::findOrFail($validateData['product_id']);
+            $products = json_decode($validateData['products']);
+
+            // $product = Product::findOrFail($validateData['product_id']);
 
             if(is_null(auth()->user()->address)) throw new \Exception('Please add your address', 401);
 
-            if ($product->stock <= 0) throw new \Exception('Product out of stock', 401);
-
-            if ($product->stock < $validateData['quantity']) throw new \Exception('Insufficient stock', 401);
-
             // update stock
-            $product->stock -= $validateData['quantity'];
-            $product->save();
+            // $product->stock -= $validateData['quantity'];
+            // $product->save();
 
             // add to orders
             $order = Order::create([
@@ -68,18 +66,32 @@ class OrdersController extends Controller
                 'shipping_address' => auth()->user()->address,
                 'shipping_cost' => Order::SHIPPING_COST,
                 'order_status' => Order::PENDING,
-                'payment_method' => 'QRIS',
-                'quantity' => $validateData['quantity'],
-                'total_price' => $product->price * $validateData['quantity'] + Order::SHIPPING_COST,
+                'payment_method' => $validateData['payment_method'],
+                'total_price' => Order::SHIPPING_COST, // $product->price * $validateData['quantity'] +
             ]);
 
-            // add to orderItems
-            $orderItems = OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $validateData['product_id'],
-                'quantity' => $validateData['quantity'],
-                'unit_price' => $product->price
-            ]);
+            foreach ($products as $product) {
+                $prd = Product::findOrFail($product->id);
+                if ($prd->stock <= 0) throw new \Exception('prd out of stock', 401);
+
+                if ($prd->stock < $product->quantity) throw new \Exception('Insufficient stock', 401);
+
+                // add to orderItems
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product->id,
+                    'quantity' => $product->quantity,
+                    'unit_price' => $product->price
+                ]);
+
+                $order->total_price += $product->quantity * $product->price;
+                $order->save();
+
+                $prd->stock -= $product->quantity;
+                $prd->save();
+            }
+
+
 
             return $this->sendRes([
                 'message' => 'Order created successfully',
