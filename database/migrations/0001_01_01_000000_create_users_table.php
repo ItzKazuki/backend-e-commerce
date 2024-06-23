@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('about')->nullable();
             $table->string('email')->unique();
             $table->string('phone');
-            $table->string('role')->default(\App\Models\User::$CUSTOMER);
+            $table->string('role')->default(\App\Models\User::CUSTOMER);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('address')->nullable();

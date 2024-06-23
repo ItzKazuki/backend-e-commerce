@@ -58,11 +58,20 @@ class User extends Authenticatable
         ];
     }
 
-    public static function booted()
+    protected static function boot()
     {
-        static::creating(fn ($user) => $user->forceFill(['avatar_url' => "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->email ) ) )]));
-        static::updated(fn ($user) => $user->forceFill(['avatar_url' => "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->email ) ) )]));
+        parent::boot();
+        static::creating(function ($model) {
+            // Generate Gravatar URL based on the user's email
+            $model->avatar_url = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($model->email)));
+        });
     }
+
+    // public static function booted()
+    // {
+    //     static::creating(fn ($user) => $user->forceFill(['avatar_url' => "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->email ) ) )]));
+    //     static::updated(fn ($user) => $user->forceFill(['avatar_url' => "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $user->email ) ) )]));
+    // }
 
     public function product() {
         return $this->hasMany(Product::class);
@@ -70,5 +79,13 @@ class User extends Authenticatable
 
     public function upload() {
         return $this->hasMany(Upload::class);
+    }
+
+    public function order() {
+        return $this->hasMany(Order::class);
+    }
+
+    public function payment() {
+        return $this->hasMany(Invoice::class);
     }
 }

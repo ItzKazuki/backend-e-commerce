@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 abstract class Controller
 {
+
+    // set midtrans cerdentials
+
     public function sendRes(array $data, int $code = 200) {
         return response()->json(array_merge([
             'status' => 'success'
