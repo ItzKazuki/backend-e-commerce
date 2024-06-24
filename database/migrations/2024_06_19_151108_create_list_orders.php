@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('invoice_number');
             $table->string('payment_method');
             $table->string('payment_status');
-            $table->string('payment_amount');
+            $table->bigInteger('payment_amount');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
@@ -27,10 +27,10 @@ return new class extends Migration
             $table->string('payment_id')->nullable(false);
             $table->uuid('customer_id')->nullable(false);
             $table->string('shipping_address');
-            $table->decimal('shipping_cost');
+            $table->bigInteger('shipping_cost');
             $table->string('payment_method');
             $table->string('order_status');
-            $table->decimal('total_price');
+            $table->bigInteger('total_price');
             $table->foreign('customer_id')->references('id')->on('users');
             $table->foreign('payment_id')->references('id')->on('payments');
             $table->timestamps();
@@ -41,7 +41,7 @@ return new class extends Migration
             $table->string('payment_id')->nullable(false);
             $table->string('invoice_number');
             $table->string('customer_name');
-            $table->decimal('invoice_amount'); // harus sudah include tax dari gateway nya
+            $table->bigInteger('invoice_amount'); // harus sudah include tax dari gateway nya
             $table->foreign('payment_id')->references('id')->on('payments');
             $table->timestamps();
         });

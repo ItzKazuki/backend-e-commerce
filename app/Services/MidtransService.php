@@ -48,7 +48,7 @@ class MidtransService
             $item_details[] = [
                 'id' => $product->id,
                 'name' => $product->name,
-                'price' => intval($product->price),
+                'price' => $product->price,
                 'quantity' => $product->quantity,
             ];
         }
