@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
-use Midtrans\CoreApi;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\Product;
@@ -66,9 +65,19 @@ class OrdersController extends Controller
 
             if (is_null(auth()->user()->address)) throw new \Exception('Please add your address', 401);
 
+            // add history payment
+            $payment = Payment::create([
+                'user_id' => auth()->user()->id,
+                'invoice_number' => 'INV',
+                'payment_method' => $validateData['payment_method'],
+                'payment_status' => Payment::PENDING,
+                'payment_amount' => 0
+            ]);
+
             // add to orders
             $order = Order::create([
                 'customer_id' => auth()->user()->id,
+                'payment_id' => $payment->id,
                 'shipping_address' => auth()->user()->address,
                 'shipping_cost' => Order::SHIPPING_COST,
                 'order_status' => Order::PENDING,
@@ -99,18 +108,11 @@ class OrdersController extends Controller
                 $prd->save();
             }
 
-            // add history payment
-            $payment = Payment::create([
-                'user_id' => auth()->user()->id,
-                'invoice_number' => '',
-                'payment_method' => $validateData['payment_method'],
-                'payment_status' => Payment::PENDING,
-                'payment_amount' => $order->total_price
-            ]);
+            $payment->payment_amount = $order->total_price;
+            $payment->save();
 
             // add invoicement
             $invoice = Invoice::create([
-                'order_id' => $order->id,
                 'payment_id' => $payment->id,
                 'invoice_number' => 'INV/' . date('Y') . '/' . strtoupper(uniqid()),
                 'customer_name' => auth()->user()->name,
@@ -121,7 +123,7 @@ class OrdersController extends Controller
             $payment->save();
 
             // do get snap token here
-            $payment_redirect = $this->paymentSnapToken($payment, $products, $order);
+            $payment_redirect = $this->paymentMidtrans($payment, $products, $order);
 
             DB::commit();
 
@@ -130,75 +132,34 @@ class OrdersController extends Controller
                 'url' => $payment_redirect,
                 'order' => $order
             ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->sendFailRes($e);
         }
     }
 
-    public function paymentSnapToken($payment, $products, $order)
+    public function paymentMidtrans($payment, $products, $order)
     {
-        $user = Auth::user();
-        $item_details = [];
+        $params = $this->midtrans->paramsGenerator($products, $order);
 
-        $customerDetails = [
-            'first_name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'shipping_address' => [
-                'first_name' => $user->name,
-                'email' => $user->email,
-                'phone' => $user->phone,
-                'address1' => $user->address,
-                'country' => 'ID'
-            ]
-        ];
+        if($order->payment_method == 'qris' || $payment->payment_method == 'qris') {
+            return $this->midtrans->getPaymentMidtrans($params); // return redirect_url and token
+        }
 
-        $transcation_details = [
-            'order_id' => $order->id,
-            'gross_amount' => $order->total_price,
-        ];
+        if($order->payment_method == 'gopay' || $payment->payment_method == 'gopay') {
+            return $this->midtrans->getPaymentGopay($params); // return token, url, etc...
+        }
 
-        foreach ($products as $product) {
-            $item_details[] = [
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => intval($product->price),
-                'quantity' => $product->quantity,
+        if($order->payment_method == 'cod' || $payment->payment_method == 'cod') {
+            return [
+                'redirect_url' => route('payment.wait-confirm', ['order_id' => $order->id])
             ];
         }
 
-        // add tax
-        $tax = [
-            'id' => 'SHP-' . uniqid(),
-            'name' => 'Shippment Fee',
-            'price' => $order->shipping_cost,
-            'quantity' => 1,
-        ];
-
-        $item_details[] = $tax;
-
-
-        $expiry = [
-            'start_time' => date('Y-m-d H:i:s T'),
-            'unit' => 'days',
-            'duration' => 1,
-        ];
-
-        $params = [
-            'customer_details' => $customerDetails,
-            'transaction_details' => $transcation_details,
-            'item_details' => $item_details,
-            'expiry' => $expiry,
-            'payment_type' => 'gopay',
-            'gopay' => array(
-                'enable_callback' => true,                // optional
-                'callback_url' => config('app.url') . '/payment/success'   // optional
-            )
-        ];
-
-        $respone = CoreApi::charge($params);
-
-        return $respone->actions[1]->url;
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Payment method not found',
+        ], 400);
     }
 }

@@ -13,6 +13,7 @@ class Order extends Model
 
     protected $fillable = [
         'customer_id',
+        'payment_id',
         'shipping_address',
         'shipping_cost',
         'payment_method',
@@ -51,8 +52,8 @@ class Order extends Model
         return $this->belongsTo(User::class, 'customer_id');
     }
 
-    public function invoice()
+    public function payment()
     {
-        return $this->hasOne(Invoice::class);
+        return $this->belongsTo(Payment::class);
     }
 }

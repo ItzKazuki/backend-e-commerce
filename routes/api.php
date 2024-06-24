@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Api\User\AccountController;
+use App\Models\Payment;
 use App\Models\User;
 
 // Route::get('/user', function (Request $request) {
@@ -39,9 +40,9 @@ Route::prefix('v1')->middleware('api')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->get('user', [AccountController::class, 'index']);
-    Route::middleware('auth:sanctum')->get('seller/{id}', function(string $id) {
-        return User::where('role', User::SELLER)->findOrFail($id);
-    });
+    Route::middleware('auth:sanctum')->get('seller/{id}', fn (string $id) => User::where('role', User::SELLER)->findOrFail($id));
+
+    Route::get('payments/list', fn () => ['payments' => Payment::PAYMENT_METHODS]);
 
     /**
      * List Products, for user can get all products and can be spesific by query in url

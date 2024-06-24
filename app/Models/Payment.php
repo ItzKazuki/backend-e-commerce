@@ -15,6 +15,7 @@ class Payment extends Model
     ];
 
     protected $fillable = [
+        'order_id',
         'user_id',
         'invoice_number',
         'payment_method',
@@ -25,6 +26,23 @@ class Payment extends Model
     const PENDING = 'pending';
     const COMPLETED = 'completed';
     const FAILED = 'failed';
+    const CANCELLED = 'cancelled';
+
+    const MIDTRANS_PAYMENTS = [
+        // "credit_card",
+        "gopay",
+        "shopeepay",
+        // "permata_va",
+        // "bca_va",
+        // "bni_va",
+        // "bri_va",
+        // "echannel",
+        // "other_va",
+        "Indomaret",
+        "alfamart",
+        // "akulaku"
+    ];
+    const PAYMENT_METHODS = ['cod', 'spay', 'qris', 'gopay'];
 
     protected $primaryKey = 'id';
     public $incrementing = false;
@@ -45,8 +63,8 @@ class Payment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function invoice()
+    public function order()
     {
-        return $this->belongsTo(Invoice::class);
+        return $this->belongsTo(Order::class);
     }
 }
