@@ -192,7 +192,7 @@ class OrdersController extends Controller
             'payment_type' => 'gopay',
             'gopay' => array(
                 'enable_callback' => true,                // optional
-                'callback_url' => 'someapps://callback'   // optional
+                'callback_url' => config('app.url') . '/payment/success'   // optional
             )
         ];
 

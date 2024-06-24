@@ -8,6 +8,39 @@ use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
 use App\Http\Controllers\Admin\UploadController;
+use App\Http\Controllers\Api\Payment\PaymentController;
+use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
+use App\Http\Controllers\Seller\OrderController;
+use App\Http\Controllers\Seller\ProductController;
+use App\Http\Middleware\IsSellerMiddleware;
+
+Route::get('/payment/success', [PaymentController::class, 'paymentSuccess']);
+
+// Route::get('/payment/fail', function() {
+//     return view('payment.fail');
+// });
+
+// Route::get('/payment/cancel', function() {
+//     return view('payment.cancel');
+// });
+
+Route::group(['prefix'=>'auth','as'=>'auth.'], function() {
+    Route::get('login', [LoginController::class, 'loginPage'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('postLogin');
+
+    Route::middleware('auth')->post('logout', [LogoutController::class, 'logout'])->name('logout');
+});
+
+Route::middleware(['auth', IsSellerMiddleware::class])->prefix('seller')->group(function () {
+    Route::get('/', function() {
+        return view('sellers.dashboard');
+    })->name('seller.dashboard');
+
+    Route::resource('product', ProductController::class);
+    Route::name('seller')->resource('orders', OrderController::class);
+
+});
+
 
 /**
  * Register seller
@@ -19,13 +52,6 @@ Route::post('account/register-seller', [SellerController::class, 'registerAccoun
  * Admin page, where acc, etc managed here ;)
  */
 Route::prefix('admin')->group(function() {
-    Route::group(['prefix'=>'auth','as'=>'auth.'], function() {
-        Route::get('login', [LoginController::class, 'loginPage'])->name('login');
-        Route::post('login', [LoginController::class, 'login'])->name('postLogin');
-
-        Route::middleware('auth')->post('logout', [LogoutController::class, 'logout'])->name('logout');
-    });
-
     Route::prefix('manage')->middleware(['auth', IsAdminMiddleware::class])->group(function() {
         Route::get('/', function() {
             return view('admin.dashboard');

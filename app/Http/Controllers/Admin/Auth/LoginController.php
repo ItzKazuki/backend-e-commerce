@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -25,7 +26,8 @@ class LoginController extends Controller
         ]);
 
         if (Auth::Attempt($data)) {
-            return redirect()->route('dashboard');
+            if(auth()->user()->role == User::SELLER) return redirect()->route('seller.dashboard');
+            if(auth()->user()->role == User::ADMIN) return redirect()->route('dashboard');
         }else{
             // Session::flash('error', 'Email atau Password Salah');
             return redirect()->route('auth.login')->with('error', 'Email atau Password Salah');
