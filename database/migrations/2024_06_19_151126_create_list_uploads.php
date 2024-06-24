@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('uploads', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('user_id')->nullable(false);
             $table->string('image');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
