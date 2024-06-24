@@ -12,7 +12,8 @@ class LoginController extends Controller
     public function loginPage()
     {
         if (Auth::check()) {
-            return redirect()->route('dashboard');
+            if (auth()->user()->role == User::SELLER) return redirect()->route('seller.dashboard');
+            if (auth()->user()->role == User::ADMIN) return redirect()->route('dashboard');
         } else {
             return view('admin.auth.login');
         }
@@ -26,11 +27,11 @@ class LoginController extends Controller
         ]);
 
         if (Auth::Attempt($data)) {
-            if(auth()->user()->role == User::SELLER) return redirect()->route('seller.dashboard');
-            if(auth()->user()->role == User::ADMIN) return redirect()->route('dashboard');
-        }else{
-            // Session::flash('error', 'Email atau Password Salah');
-            return redirect()->route('auth.login')->with('error', 'Email atau Password Salah');
+            // dd(Auth::check());
+            if (auth()->user()->role == User::SELLER) return redirect()->route('seller.dashboard');
+            if (auth()->user()->role == User::ADMIN) return redirect()->route('dashboard');
         }
+        // Session::flash('error', 'Email atau Password Salah');
+        return redirect()->back()->with('error', 'Email atau Password Salah');
     }
 }

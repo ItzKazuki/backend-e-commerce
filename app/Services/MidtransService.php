@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Midtrans\Config;
 use Midtrans\Snap;
+use Midtrans\Transaction;
 
 class MidtransService
 {
@@ -15,8 +16,7 @@ class MidtransService
         Config::$is3ds = config('midtrans.is_3ds');
     }
 
-    public function getSnapToken(array $params)
-    {
-        return Snap::getSnapToken($params);
+    public function getPaymentStatus($order_id) {
+        return Transaction::status($order_id);
     }
 }

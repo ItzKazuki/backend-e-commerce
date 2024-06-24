@@ -2,27 +2,22 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Middleware\IsSellerMiddleware;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\SellerController;
-use App\Http\Controllers\Admin\Auth\LoginController;
-use App\Http\Controllers\Admin\Auth\LogoutController;
 use App\Http\Controllers\Admin\UploadController;
-use App\Http\Controllers\Api\Payment\PaymentController;
-use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Seller\OrderController;
 use App\Http\Controllers\Seller\ProductController;
-use App\Http\Middleware\IsSellerMiddleware;
+use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Payments\PaymentController;
+use App\Http\Controllers\Admin\Auth\LogoutController;
+use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 
-Route::get('/payment/success', [PaymentController::class, 'paymentSuccess']);
-
-// Route::get('/payment/fail', function() {
-//     return view('payment.fail');
-// });
-
-// Route::get('/payment/cancel', function() {
-//     return view('payment.cancel');
-// });
+Route::group(['prefix'=>'payment', 'as'=>'payment.'], function() {
+    Route::get('success', [PaymentController::class, 'paymentSuccess'])->name('success');
+    Route::get('cancel', [PaymentController::class, 'paymentCancel'])->name('cancel');
+});
 
 Route::group(['prefix'=>'auth','as'=>'auth.'], function() {
     Route::get('login', [LoginController::class, 'loginPage'])->name('login');
@@ -31,7 +26,7 @@ Route::group(['prefix'=>'auth','as'=>'auth.'], function() {
     Route::middleware('auth')->post('logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
-Route::middleware(['auth', IsSellerMiddleware::class])->prefix('seller')->group(function () {
+Route::group(['prefix'=>'seller', 'middleware' => ['auth', IsSellerMiddleware::class]],function () {
     Route::get('/', function() {
         return view('sellers.dashboard');
     })->name('seller.dashboard');

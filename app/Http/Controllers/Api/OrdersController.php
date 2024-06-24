@@ -76,27 +76,6 @@ class OrdersController extends Controller
                 'total_price' => Order::SHIPPING_COST, // $product->price * $validateData['quantity'] +
             ]);
 
-            // add history payment
-            $payment = Payment::create([
-                'user_id' => auth()->user()->id,
-                'invoice_number' => '',
-                'payment_method' => $validateData['payment_method'],
-                'payment_status' => Payment::PENDING,
-                'payment_amount' => $order->total_price
-            ]);
-
-            // add invoicement
-            $invoice = Invoice::create([
-                'order_id' => $order->id,
-                'payment_id' => $payment->id,
-                'invoice_number' => 'INV/' . date('Y') . '/' . strtoupper(uniqid()),
-                'customer_name' => auth()->user()->name,
-                'invoice_amount' => $order->total_price,
-            ]);
-
-            $payment->invoice_number = $invoice->invoice_number;
-            $payment->save();
-
             foreach ($products as $product) {
                 $prd = Product::findOrFail($product->id);
                 if ($prd->stock <= 0) throw new \Exception('product out of stock', 401);
@@ -120,6 +99,27 @@ class OrdersController extends Controller
                 $prd->save();
             }
 
+            // add history payment
+            $payment = Payment::create([
+                'user_id' => auth()->user()->id,
+                'invoice_number' => '',
+                'payment_method' => $validateData['payment_method'],
+                'payment_status' => Payment::PENDING,
+                'payment_amount' => $order->total_price
+            ]);
+
+            // add invoicement
+            $invoice = Invoice::create([
+                'order_id' => $order->id,
+                'payment_id' => $payment->id,
+                'invoice_number' => 'INV/' . date('Y') . '/' . strtoupper(uniqid()),
+                'customer_name' => auth()->user()->name,
+                'invoice_amount' => $order->total_price,
+            ]);
+
+            $payment->invoice_number = $invoice->invoice_number;
+            $payment->save();
+
             // do get snap token here
             $payment_redirect = $this->paymentSnapToken($payment, $products, $order);
 
@@ -136,7 +136,8 @@ class OrdersController extends Controller
         }
     }
 
-    public function paymentSnapToken($payment, $products, $order) {
+    public function paymentSnapToken($payment, $products, $order)
+    {
         $user = Auth::user();
         $item_details = [];
 
@@ -158,7 +159,7 @@ class OrdersController extends Controller
             'gross_amount' => $order->total_price,
         ];
 
-        foreach($products as $product) {
+        foreach ($products as $product) {
             $item_details[] = [
                 'id' => $product->id,
                 'name' => $product->name,
