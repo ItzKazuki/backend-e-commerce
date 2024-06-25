@@ -1,12 +1,11 @@
 <?php
 
-use App\Models\Payment;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdminMiddleware;
 use App\Http\Middleware\IsSellerMiddleware;
-use App\Http\Controllers\Admin\Auth\LoginController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Payments\PaymentController;
-use App\Http\Controllers\Admin\Auth\LogoutController;
 use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
