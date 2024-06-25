@@ -5,8 +5,8 @@
     <h1>Sellers</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('sellers.index') }}">Seller</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.sellers.index') }}">Seller</a></li>
         </ol>
     </nav>
 </div>
@@ -33,8 +33,8 @@
                 <td>{{ $seller->name }}</td>
                 <td>{{ ucfirst($seller->role) }}</td>
                 <td>{{ $seller->phone }}</td>
-                <td><a href="{{ route('sellers.show', ['seller' => $seller->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
-                    <a href="{{ route('sellers.edit', ['seller' => $seller->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
+                <td><a href="{{ route('admin.sellers.show', ['seller' => $seller->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
+                    <a href="{{ route('admin.sellers.edit', ['seller' => $seller->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
                     <a href="#" class="btn btn-danger btn-sm" title="Remove User"><i class="bi bi-trash"></i></a></td>
             </tr>
           @endforeach

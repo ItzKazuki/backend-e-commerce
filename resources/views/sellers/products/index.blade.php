@@ -15,7 +15,7 @@
     @session('success')
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-1"></i>
-            Success create new product.
+            Success create new seller.product.
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endsession
@@ -50,17 +50,17 @@
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->product_name }}</td>
                             <td>{{ $product->price }}</td>
-                            <td><a href="{{ route('product.show', ['product' => $product->id]) }}"
-                                    class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
-                                <a href="{{ route('product.edit', ['product' => $product->id]) }}"
-                                    class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
+                            <td><a href="{{ route('seller.product.show', ['product' => $product->id]) }}"
+                                    class="btn btn-primary btn-sm" title="Show Product Detail"><i class="bi bi-eye"></i></a>
+                                <a href="{{ route('seller.product.edit', ['product' => $product->id]) }}"
+                                    class="btn btn-warning btn-sm" title="Edit Product"><i class="bi bi-pen"></i></a>
                                 <a href="#" class="btn btn-danger btn-sm"
                                     onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin ?')){document.getElementById('remove-{{ $product->id }}-form').submit();}"
-                                    title="Remove product"><i class="bi bi-trash"></i></a>
+                                    title="Remove Product"><i class="bi bi-trash"></i></a>
 
                                 <form id="remove-{{ $product->id }}-form"
-                                    action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST"
-                                    style="display: none;">
+                                    action="{{ route('seller.product.destroy', ['product' => $product->id]) }}"
+                                    method="POST" style="display: none;">
                                     @csrf
                                     @method('DELETE')
                                 </form>

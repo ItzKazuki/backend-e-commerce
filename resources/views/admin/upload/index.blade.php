@@ -5,8 +5,8 @@
     <h1>User Uploads</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">User Uploads</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.uploads.index') }}">User Uploads</a></li>
         </ol>
     </nav>
 </div>
@@ -33,10 +33,10 @@
                 <td>{{ $upload->id }}</td>
                 <td><img src="{{ $upload->image }}" width="100" alt=""></td>
                 <td>{{ $upload->user->name }}</td>
-                <td><a href="{{ route('uploads.show', ['id' => $upload->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
+                <td><a href="{{ route('admin.uploads.show', ['id' => $upload->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
                     <a href="#" class="btn btn-danger btn-sm" onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin ?')){document.getElementById('remove-{{$upload->id}}-form').submit();}" title="Remove User"><i class="bi bi-trash"></i></a>
 
-                    <form id="remove-{{$upload->id}}-form" action="{{ route('uploads.destroy', ['id' => $upload->id]) }}" method="POST" style="display: none;">
+                    <form id="remove-{{$upload->id}}-form" action="{{ route('admin.uploads.destroy', ['id' => $upload->id]) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>

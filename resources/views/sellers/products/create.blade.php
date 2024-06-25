@@ -18,7 +18,7 @@
             <h5 class="card-title">Create New Product Form</h5>
 
             <!-- Vertical Form -->
-            <form class="row g-3" action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+            <form class="row g-3" action="{{ route('seller.product.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="col-12">

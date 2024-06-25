@@ -7,7 +7,7 @@
     <link rel="icon" href="images/dollar.png" type="image/png" sizes="16x16">
     <title>Payment Success</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-    @yield('header')
+    <meta http-equiv="refresh" content="5; url={{ config('app.frontend_url') }}">
 </head>
 <style>
     body {

@@ -6,8 +6,8 @@ use App\Models\Order;
     <h1>Orders</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('orders.index') }}">Orders</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.orders.index') }}">Orders</a></li>
         </ol>
     </nav>
 </div>
@@ -34,8 +34,8 @@ use App\Models\Order;
                 <td>{{ $order->id }}</td>
                 <td>{{ $order->order_status }}</td>
                 <td>{{ $order->user->name }}</td>
-                <td><a href="{{ route('orders.show', ['order' => $order->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
-                    <a href="{{ route('orders.edit', ['order' => $order->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
+                <td><a href="{{ route('admin.orders.show', ['order' => $order->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
+                    <a href="{{ route('admin.orders.edit', ['order' => $order->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
                     <a href="#" class="btn btn-danger btn-sm" title="Remove User"><i class="bi bi-trash"></i></a></td>
             </tr>
           @endforeach

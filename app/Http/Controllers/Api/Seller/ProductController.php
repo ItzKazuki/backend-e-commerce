@@ -41,7 +41,7 @@ class ProductController extends Controller
                 'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
             ]);
 
-            $imagePath = $request->file('product_image')->store('products');
+            $imagePath = $request->file('product_image')->store('assets/products');
 
             $imageUrl = Storage::url($imagePath);
 
@@ -96,7 +96,7 @@ class ProductController extends Controller
             ]);
 
             if(isset($request->product_image)){
-                $imagePath = $request->file('product_image')->store('products');
+                $imagePath = $request->file('product_image')->store('assets/products');
                 $imageUrl = Storage::url($imagePath);
 
                 // set imageUrl to Upload

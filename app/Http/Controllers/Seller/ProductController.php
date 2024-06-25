@@ -42,7 +42,7 @@ class ProductController extends Controller
             'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $imagePath = $request->file('product_image')->store('products');
+        $imagePath = $request->file('product_image')->store('assets/products');
         $imageUrl = Storage::url($imagePath);
 
         // set imageUrl to Upload
@@ -59,7 +59,7 @@ class ProductController extends Controller
 
         if(!$product) return redirect()->back()->with('error', 'Failed add product to database');
 
-        return redirect()->route('product.index')->with('success', 'Success add product to database');
+        return redirect()->route('seller.product.index')->with('success', 'Success add product to database');
     }
 
     /**
@@ -98,7 +98,7 @@ class ProductController extends Controller
         if(!$product) return redirect()->back()->with('error', 'Product not found');
 
         if(isset($request->product_image)){
-            $imagePath = $request->file('product_image')->store('products');
+            $imagePath = $request->file('product_image')->store('assets/products');
             $imageUrl = Storage::url($imagePath);
 
             // set imageUrl to Upload
@@ -117,10 +117,10 @@ class ProductController extends Controller
         if(isset($request->product_image)){
             $product->upload_id = $uplaodDetail->id;
         }
-        
+
         $product->save();
 
-        return redirect()->route('product.index')->with('success', 'Success update product to database');
+        return redirect()->route('seller.product.index')->with('success', 'Success update product to database');
     }
 
     /**
@@ -129,6 +129,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('product.index')->with('success', 'Success delete product to database');
+        return redirect()->route('seller.product.index')->with('success', 'Success delete product to database');
     }
 }

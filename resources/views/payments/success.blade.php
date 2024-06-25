@@ -1,9 +1,5 @@
 @extends('layouts.payment')
 
-@section('header')
-<meta http-equiv="refresh" content="5; url={{ config('app.frontend_url') }}">
-@endsection
-
 @section('content')
 <div class="paper">
     <div class="main-contents">

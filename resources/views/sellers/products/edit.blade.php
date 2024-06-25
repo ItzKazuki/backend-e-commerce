@@ -18,7 +18,7 @@
             <h5 class="card-title">Update Product Form</h5>
 
             <!-- Vertical Form -->
-            <form class="row g-3" action="{{ route('product.update', ['product' => $product->id]) }}" method="POST" enctype="multipart/form-data">
+            <form class="row g-3" action="{{ route('seller.product.update', ['product' => $product->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 

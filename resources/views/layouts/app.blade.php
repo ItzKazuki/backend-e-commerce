@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Dashboard - {{config('app.name')}}</title>
+    <title>Dashboard - {{ config('app.name') }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -38,9 +38,9 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center">
+            <a href="{{ route('admin.dashboard') }}" class="logo d-flex align-items-center">
                 <img src="/assets/img/logo.png" alt="">
-                <span class="d-none d-lg-block">{{config('app.name')}}</span>
+                <span class="d-none d-lg-block">{{ config('app.name') }}</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -220,7 +220,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile') }}">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -230,7 +230,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.profile') }}">
                                 <i class="bi bi-gear"></i>
                                 <span>Account Settings</span>
                             </a>
@@ -257,7 +257,7 @@
                                 <span>Sign Out</span>
                             </a>
 
-                            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST"
+                            <form id="logout-form" action="{{ route('admin.auth.logout') }}" method="POST"
                                 style="display: none;">
                                 @csrf
                             </form>
@@ -277,14 +277,14 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link" href="{{ route('admin.dashboard') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('uploads.index') }}">
+                <a class="nav-link" href="{{ route('admin.uploads.index') }}">
                     <i class="bi bi-folder"></i>
                     <span>File Uploads</span>
                 </a>
@@ -293,17 +293,16 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-cart3"></i><span>Orders</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-cart3"></i><span>Orders</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('orders.index') }}">
+                        <a href="{{ route('admin.orders.index') }}">
                             <i class="bi bi-circle"></i><span>Orders</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('orders.create') }}">
+                        <a href="{{ route('admin.orders.create') }}">
                             <i class="bi bi-circle"></i><span>Create</span>
                         </a>
                     </li>
@@ -321,7 +320,7 @@
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('sellers.index') }}">
+                        <a href="{{ route('admin.sellers.index') }}">
                             <i class="bi bi-circle"></i><span>Sellers</span>
                         </a>
                     </li>
@@ -340,17 +339,16 @@
 
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person-circle"></i><span>Users</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-person-circle"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('users.index') }}">
+                        <a href="{{ route('admin.users.index') }}">
                             <i class="bi bi-circle"></i><span>Users</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('users.create') }}">
+                        <a href="{{ route('admin.users.create') }}">
                             <i class="bi bi-circle"></i><span>Create</span>
                         </a>
                     </li>
@@ -378,7 +376,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>{{config('app.name')}}</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>{{ config('app.name') }}</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>

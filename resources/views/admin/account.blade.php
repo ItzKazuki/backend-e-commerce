@@ -5,7 +5,7 @@
         <h1>Profile</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
                 <li class="breadcrumb-item">Account</li>
             </ol>
         </nav>
@@ -18,7 +18,7 @@
                 <div class="card">
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                        <img src="{{$user->avatar_url}}" alt="Profile" class="rounded-circle">
+                        <img src="{{ $user->avatar_url }}" alt="Profile" class="rounded-circle">
                         <h2>{{ $user->name }}</h2>
                         <h3>{{ ucfirst($user->role) }}</h3>
                         <div class="social-links mt-2">
@@ -64,7 +64,7 @@
 
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <h5 class="card-title">About</h5>
-                                <p class="small fst-italic">{{$user->about}}</p>
+                                <p class="small fst-italic">{{ $user->about }}</p>
 
                                 <h5 class="card-title">Profile Details</h5>
 
@@ -89,10 +89,10 @@
                                 </div>
 
                                 @isset($user->address)
-                                <div class="row">
-                                    <div class="col-lg-3 col-md-4 label">Address</div>
-                                    <div class="col-lg-9 col-md-8">{{$user->address}}</div>
-                                </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Address</div>
+                                        <div class="col-lg-9 col-md-8">{{ $user->address }}</div>
+                                    </div>
                                 @endisset
 
                                 <div class="row">
@@ -134,7 +134,7 @@
                                     <div class="row mb-3">
                                         <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <textarea name="about" class="form-control" id="about" style="height: 100px">{{$user->about}}</textarea>
+                                            <textarea name="about" class="form-control" id="about" style="height: 100px">{{ $user->about }}</textarea>
                                         </div>
                                     </div>
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Upload;
-use Illuminate\Http\Request;
 
 class UploadController extends Controller
 {

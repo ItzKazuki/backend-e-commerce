@@ -220,7 +220,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                            <a class="dropdown-item d-flex align-items-center" href="">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
                             </a>
@@ -230,7 +230,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route('profile') }}">
+                            <a class="dropdown-item d-flex align-items-center" href="">
                                 <i class="bi bi-gear"></i>
                                 <span>Account Settings</span>
                             </a>
@@ -309,12 +309,12 @@
                 </a>
                 <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="{{ route('product.index') }}">
+                        <a href="{{ route('seller.product.index') }}">
                             <i class="bi bi-circle"></i><span>Product</span>
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('product.create') }}">
+                        <a href="{{ route('seller.product.create') }}">
                             <i class="bi bi-circle"></i><span>Create</span>
                         </a>
                     </li>

@@ -5,10 +5,10 @@
     <h1>Profile</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
             <li class="breadcrumb-item">Profile</li>
-            <li class="breadcrumb-item"><a href="{{ route('users.show', $user->id) }}">{{$user->id}}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.show', $user->id) }}">{{$user->id}}</a></li>
         </ol>
     </nav>
 </div><!-- End Page Title -->

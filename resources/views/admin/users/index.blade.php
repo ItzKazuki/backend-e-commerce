@@ -5,8 +5,8 @@
     <h1>Users</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
         </ol>
     </nav>
 </div>
@@ -33,8 +33,8 @@
                 <td>{{ $user->name }}</td>
                 <td>{{ ucfirst($user->role) }}</td>
                 <td>{{ $user->phone }}</td>
-                <td><a href="{{ route('users.show', ['user' => $user->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
-                    <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
+                <td><a href="{{ route('admin.users.show', ['user' => $user->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
+                    <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
                     value="{{ $product->product_name }}
                 </td>
             </tr>

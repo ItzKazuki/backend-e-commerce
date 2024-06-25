@@ -32,11 +32,11 @@ Route::group(['prefix'=>'auth','as'=>'auth.'], function() {
     Route::middleware('auth')->post('logout', [LogoutController::class, 'logout'])->name('logout');
 });
 
-Route::group(['prefix'=>'seller', 'middleware' => ['auth', IsSellerMiddleware::class]],function () {
-    Route::get('/', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
+Route::group(['prefix'=>'seller','as' => 'seller.', 'middleware' => ['auth', IsSellerMiddleware::class]],function () {
+    Route::get('/dashboard', [SellerDashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('product', SellerProductController::class);
-    Route::name('seller')->resource('orders', SellerOrderController::class);
+    Route::resource('orders', SellerOrderController::class);
 });
 
 /**
@@ -48,18 +48,16 @@ Route::post('account/register-seller', [AdminSellerController::class, 'registerA
 /**
  * Admin page, where acc, etc managed here ;)
  */
-Route::prefix('admin')->group(function() {
-    Route::prefix('manage')->middleware(['auth', IsAdminMiddleware::class])->group(function() {
-        Route::get('/', fn () => view('admin.dashboard'))->name('dashboard');
+Route::group(['prefix' => 'admin','as' => 'admin.', 'middleware' => ['auth', IsAdminMiddleware::class]],function() {
+    Route::get('/', fn () => view('admin.dashboard'))->name('dashboard');
 
-        Route::get('/account', fn() => view('admin.account', ['user' => auth()->user()]))->name('profile');
+    Route::get('/account', fn() => view('admin.account', ['user' => auth()->user()]))->name('profile');
 
-        Route::get('uploads', [AdminUploadController::class, 'index'])->name('uploads.index');
-        Route::get('uploads/{id}', [AdminUploadController::class, 'show'])->name('uploads.show');
-        Route::delete('uploads/{id}', [AdminUploadController::class, 'destroy'])->name('uploads.destroy');
+    Route::get('uploads', [AdminUploadController::class, 'index'])->name('uploads.index');
+    Route::get('uploads/{id}', [AdminUploadController::class, 'show'])->name('uploads.show');
+    Route::delete('uploads/{id}', [AdminUploadController::class, 'destroy'])->name('uploads.destroy');
 
-        Route::resource('orders', AdminOrdersController::class);
-        Route::resource('sellers', AdminSellerController::class);
-        Route::resource('users', AdminUserController::class);
-    });
+    Route::resource('orders', AdminOrdersController::class);
+    Route::resource('sellers', AdminSellerController::class);
+    Route::resource('users', AdminUserController::class);
 });

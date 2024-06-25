@@ -5,10 +5,10 @@
     <h1>Users</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
             <li class="breadcrumb-item">Edit</li>
-            <li class="breadcrumb-item"><a href="{{ route('users.edit', ['user' => $user->id]) }}">{{ $user->id }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.edit', ['user' => $user->id]) }}">{{ $user->id }}</a></li>
         </ol>
     </nav>
 </div>
@@ -18,7 +18,7 @@
       <h5 class="card-title">Edit User Form</h5>
 
       <!-- Vertical Form -->
-      <form class="row g-3" action="{{ route('users.update', ['user' => $user->id]) }}" method="POST">
+      <form class="row g-3" action="{{ route('admin.users.update', ['user' => $user->id]) }}" method="POST">
         @csrf
         @method('PUT')
 

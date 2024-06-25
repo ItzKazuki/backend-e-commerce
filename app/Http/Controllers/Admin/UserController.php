@@ -44,7 +44,7 @@ class UserController extends Controller
 
         User::create($userData);
 
-        return redirect()->route('users.index')->with('success', 'Success Create New Account');
+        return redirect()->route('admin.users.index')->with('success', 'Success Create New Account');
     }
 
     /**
@@ -92,7 +92,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'Success Update Account');
+        return redirect()->route('admin.users.index')->with('success', 'Success Update Account');
     }
 
     /**
@@ -102,6 +102,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'Success Delete User');
+        return redirect()->route('admin.users.index')->with('success', 'Success Delete User');
     }
 }

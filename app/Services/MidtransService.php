@@ -7,7 +7,6 @@ use Midtrans\Config;
 use App\Models\Order;
 use Midtrans\CoreApi;
 use App\Models\Payment;
-use App\Models\Product;
 use Midtrans\Transaction;
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +20,7 @@ class MidtransService
         Config::$is3ds = config('midtrans.is_3ds');
     }
 
-    public function paramsGenerator(array $products,Order $order)
+    public function paramsGenerator(array $products, Order $order)
     {
         $user = Auth::user();
         $item_details = [];

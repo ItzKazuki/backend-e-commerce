@@ -5,8 +5,8 @@
     <h1>Users</h1>
     <nav>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('users.index') }}">Users</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('admin.users.index') }}">Users</a></li>
             <li class="breadcrumb-item">Create</li>
         </ol>
     </nav>
@@ -17,7 +17,7 @@
       <h5 class="card-title">Create New User Form</h5>
 
       <!-- Vertical Form -->
-      <form class="row g-3" action="{{ route('users.store') }}" method="POST">
+      <form class="row g-3" action="{{ route('admin.users.store') }}" method="POST">
         @csrf
 
         <div class="col-12">
