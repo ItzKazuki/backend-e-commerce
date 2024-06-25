@@ -41,9 +41,9 @@ Route::prefix('v1')->middleware('api')->group(function () {
         Route::delete('/', [AccountController::class, 'destroy']);
 
         Route::get('address', [AccountController::class, 'getAddress']);
-        Route::post('address', [AccountController::class, 'setAddress']);
+        Route::post('address', [AccountController::class, 'addAddress']);
         Route::put('address/{id}', [AccountController::class, 'updateAddress']);
-        Route::post('address/set-primary', [AccountController::class, 'setPrimaryAddress']);
+        Route::post('address/set-primary/{id}', [AccountController::class, 'setPrimaryAddress']);
         Route::delete('address/{id}', [AccountController::class, 'deleteAddress']);
     });
 

@@ -43,7 +43,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'chaezaibnuakbar@gmail.com',
             'phone' => '62859102628529',
             'role' => 'seller',
-            'address' => 'jln tipar cakung kp baru gg masjid 1',
             'password' => Hash::make('password')
         ]);
 

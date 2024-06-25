@@ -25,7 +25,6 @@ class User extends Authenticatable
         'password',
         'role',
         'about',
-        'address'
     ];
 
     protected $with = ['addresses'];

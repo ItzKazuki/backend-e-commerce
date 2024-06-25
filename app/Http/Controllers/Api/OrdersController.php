@@ -93,7 +93,7 @@ class OrdersController extends Controller
             $order = Order::create([
                 'customer_id' => auth()->user()->id,
                 'payment_id' => $payment->id,
-                'shipping_address' => auth()->user()->primaryAddress,
+                'shipping_address_id' => $request->user()->primaryAddress->id,
                 'shipping_cost' => Order::SHIPPING_COST,
                 'order_status' => Order::PENDING,
                 'payment_method' => $validateData['payment_method'],

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\User;
 
 use Exception;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 /**
  * @group Account
@@ -90,7 +90,7 @@ class AccountController extends Controller
     public function getAddress(Request $request)
     {
         return $this->sendRes([
-            'addresses' => $request->user()->address()->get()
+            'addresses' => $request->user()->addresses()->get()
         ]);
     }
 
@@ -98,35 +98,44 @@ class AccountController extends Controller
      * Add Address
      *
      * this API for add address of user.
-     * @bodyParam address_line1 required addres1 for user. Example: jln. kp baru no 55
-     * @bodyParam city required city for user. Example: jakarta
-     * @bodyParam state required state for user. Example: jakarta
-     * @bodyParam country required country for user. Example: indonesia
-     * @bodyParam postal_code required postal code for user. Example: 12345
+     * @bodyParam address_title string required title for identified address. Example: Home
+     * @bodyParam address_line1 string required addres1 for identified address. Example: jln. kp baru no 55
+     * @bodyParam address_line2 string addres2 for identified address. Example: jln. kp baru no 55
+     * @bodyParam city string required city for identified address. Example: jakarta
+     * @bodyParam state string required state for identified address. Example: jakarta
+     * @bodyParam country string required country for identified address. Example: indonesia
+     * @bodyParam postal_code string required postal code for identified address. Example: 12345
      * */
     public function addAddress(Request $request)
     {
         try {
             $addressData = $request->validate([
+                'address_title' => 'required|string|max:255',
                 'address_line1' => 'required|string|max:255',
+                'address_line2' => 'max:255',
                 'city' => 'required|string|max:255',
                 'state' => 'required|string|max:255',
                 'country' => 'required|string|max:255',
                 'postal_code' => 'required|string|max:20',
             ]);
 
-            if($request->user()->address()->count() >= 5) throw new Exception(
+            if($request->user()->addresses()->count() >= 5) throw new Exception(
                 'You can only add 5 addresses', 400
             );
 
-            if($request->user()->address()->count() == 0) {
+            if($request->user()->addresses()->count() == 0) {   
                 $addressData['is_primary'] = true;
             }
 
-            $request->user()->address()->create($addressData);
+            $request->user()->addresses()->create($addressData);
+
+            sleep(3);
+
+            $user = User::find($request->user()->id);
 
             return $this->sendRes([
-                'message' => 'Address added successfully'
+                'message' => 'Address added successfully',
+                'user' => $user
             ]);
         } catch (\Exception $e) {
             return $this->sendFailRes($e, 400);
@@ -165,11 +174,13 @@ class AccountController extends Controller
      *
      * this API use for update address details
      * @urlParam id required The id address. Example: address-1
-     * @bodyParam address_line1 required addres1 for user. Example: jln. kp baru no 55
-     * @bodyParam city required city for user. Example: jakarta
-     * @bodyParam state required state for user. Example: jakarta
-     * @bodyParam country required country for user. Example: indonesia
-     * @bodyParam postal_code required postal code for user. Example: 12345
+     * @bodyParam address_title string required title for identified address. Example: Home
+     * @bodyParam address_line1 string required addres1 for identified address. Example: jln. kp baru no 55
+     * @bodyParam address_line2 string addres2 for identified address. Example: jln. kp baru no 55
+     * @bodyParam city string required city for identified address. Example: jakarta
+     * @bodyParam state string required state for identified address. Example: jakarta
+     * @bodyParam country string required country for identified address. Example: indonesia
+     * @bodyParam postal_code string required postal code for identified address. Example: 12345
      */
     public function editAddress(Request $request, string $id)
     {
@@ -179,11 +190,13 @@ class AccountController extends Controller
             if (!$address) throw new Exception('Address not found', 404);
 
             $addressData = $request->validate([
-                'address_line1' => 'required|string|max:255',
-                'city' => 'required|string|max:255',
-                'state' => 'required|string|max:255',
-                'country' => 'required|string|max:255',
-                'postal_code' => 'required|string|max:20',
+                'address_title' => 'string|max:255',
+                'address_line1' => 'string|max:255',
+                'address_line2' => 'max:255',
+                'city' => 'string|max:255',
+                'state' => 'string|max:255',
+                'country' => 'string|max:255',
+                'postal_code' => 'string|max:20',
             ]);
 
             $request->user()->address()->create($addressData);

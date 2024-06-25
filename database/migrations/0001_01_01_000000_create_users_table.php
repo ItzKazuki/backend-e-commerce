@@ -29,6 +29,7 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->uuid('user_id')->nullable(false);
+            $table->string('address_title   ');
             $table->string('address_line1');
             $table->string('address_line2')->nullable();
             $table->string('city');
