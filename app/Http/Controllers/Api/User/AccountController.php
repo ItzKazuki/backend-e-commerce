@@ -182,7 +182,7 @@ class AccountController extends Controller
      * @bodyParam country string required country for identified address. Example: indonesia
      * @bodyParam postal_code string required postal code for identified address. Example: 12345
      */
-    public function editAddress(Request $request, string $id)
+    public function updateAddress(Request $request, string $id)
     {
         try {
             $address = $request->user()->addresses()->find($id);
