@@ -26,13 +26,14 @@ return new class extends Migration
             $table->string('id')->primary();
             $table->string('payment_id')->nullable(false);
             $table->uuid('customer_id')->nullable(false);
-            $table->string('shipping_address');
+            $table->string('shipping_address_id')->nullable(false);
             $table->bigInteger('shipping_cost');
             $table->string('payment_method');
             $table->string('order_status');
             $table->bigInteger('total_price');
             $table->foreign('customer_id')->references('id')->on('users');
             $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('shipping_address_id')->references('id')->on('addresses');
             $table->timestamps();
         });
 

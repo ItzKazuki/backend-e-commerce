@@ -20,10 +20,24 @@ return new class extends Migration
             $table->string('role')->default(\App\Models\User::CUSTOMER);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('address')->nullable();
+            // $table->string('address')->nullable();
             $table->string('avatar_url')->nullable();
             $table->rememberToken();
             $table->timestamps();
+        });
+
+        Schema::create('addresses', function (Blueprint $table) {
+            $table->string('id')->primary();
+            $table->uuid('user_id')->nullable(false);
+            $table->string('address_line1');
+            $table->string('address_line2')->nullable();
+            $table->string('city');
+            $table->string('state');
+            $table->string('postal_code');
+            $table->string('country');
+            $table->boolean('is_primary')->default(false);
+            $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

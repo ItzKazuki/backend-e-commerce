@@ -28,6 +28,8 @@ class User extends Authenticatable
         'address'
     ];
 
+    protected $with = ['addresses'];
+
     /**
      *  This var using to define role user, default is customer
      */
@@ -87,5 +89,15 @@ class User extends Authenticatable
 
     public function payment() {
         return $this->hasMany(Invoice::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    public function primaryAddress()
+    {
+        return $this->hasOne(Address::class)->where('is_primary', true);
     }
 }

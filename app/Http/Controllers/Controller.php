@@ -16,8 +16,10 @@ abstract class Controller
     public function sendFailRes(\Exception $e, int $code = 400) {
         return response()->json([
             'status' => 'failed',
-            'message' => $e->getMessage(),
-            'error' => $e->getCode()
+            'error' => $e->getMessage(),
+            'code' => $e->getCode(),
+            'file' => $e->getFile(),
+            'line' => $e->getLine(),
         ], $code);
     }
 }

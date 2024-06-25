@@ -30,10 +30,9 @@ class AuthController extends Controller
         try {
             $userData = $request->validate([
                 'name' => 'required|min:3|max:70',
-                'email' => 'required|string|unique:users',
-                'phone' => 'required',
-                'password' => 'required|min:3',
-                'address' => 'min:3|max:255'
+                'email' => 'required|email|string|unique:users',
+                'phone' => 'required|string|unique:users',
+                'password' => 'required|min:3'
             ]);
 
             // manipulasi object di php

@@ -35,7 +35,17 @@ Route::prefix('v1')->middleware('api')->group(function () {
         Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
     });
 
-    Route::middleware('auth:sanctum')->get('user', [AccountController::class, 'index']);
+    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'user'],function () {
+        Route::get('/', [AccountController::class, 'index']);
+        Route::put('/', [AccountController::class, 'update']);
+        Route::delete('/', [AccountController::class, 'destroy']);
+
+        Route::get('address', [AccountController::class, 'getAddress']);
+        Route::post('address', [AccountController::class, 'setAddress']);
+        Route::put('address/{id}', [AccountController::class, 'updateAddress']);
+        Route::post('address/set-primary', [AccountController::class, 'setPrimaryAddress']);
+        Route::delete('address/{id}', [AccountController::class, 'deleteAddress']);
+    });
 
     /**
      * List Products, for user can get all products and can be spesific by query in url

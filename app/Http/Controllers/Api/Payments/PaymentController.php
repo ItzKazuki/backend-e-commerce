@@ -15,12 +15,18 @@ use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    /**
+     * Show all Payment method
+     *
+     *  user can show all available payment method
+     */
     public function showPaymentList()
     {
         return $this->sendRes([
             'payments' => Payment::PAYMENT_METHODS
         ]);
     }
+
     /**
      * Show Payment using spesific id
      *

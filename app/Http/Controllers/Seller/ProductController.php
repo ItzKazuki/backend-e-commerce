@@ -34,11 +34,11 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $productData = $request->validate([
-            'product_name' => 'required',
-            'product_desc' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
-            'brand' => 'required',
+            'product_name' => 'required|string|max:100',
+            'product_desc' => 'required|string|max:255',
+            'price' => 'required|integer',
+            'stock' => 'required|integer',
+            'brand' => 'required|string|max:100',
             'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
@@ -51,16 +51,13 @@ class ProductController extends Controller
             'user_id' => $request->user()->id
         ]);
 
+        $productData['upload_id'] = $uplaodDetail->id;
+        $productData['seller_id'] = $request->user()->id;
+
         // set productData to Product
-        $product = Product::create([
-            'product_name' => $productData['product_name'],
-            'product_desc' => $productData['product_desc'],
-            'price' => $productData['price'],
-            'stock' => $productData['stock'],
-            'brand' => $productData['brand'],
-            'seller_id' => $request->user()->id,
-            'upload_id' => $uplaodDetail->id
-        ]);
+        $product = Product::create($productData);
+
+        if(!$product) return redirect()->back()->with('error', 'Failed add product to database');
 
         return redirect()->route('product.index')->with('success', 'Success add product to database');
     }
@@ -90,13 +87,15 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $productData = $request->validate([
-            'product_name' => 'required',
-            'product_desc' => 'required',
-            'price' => 'required',
-            'stock' => 'required',
-            'brand' => 'required',
-            // 'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'product_name' => 'string|max:100',
+            'product_desc' => 'string|max:255',
+            'price' => 'integer',
+            'stock' => 'integer',
+            'brand' => 'string|max:100',
+            'product_image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
+
+        if(!$product) return redirect()->back()->with('error', 'Product not found');
 
         if(isset($request->product_image)){
             $imagePath = $request->file('product_image')->store('products');
@@ -114,12 +113,14 @@ class ProductController extends Controller
         $product->price = $productData['price'];
         $product->stock = $productData['stock'];
         $product->brand = $productData['brand'];
+
         if(isset($request->product_image)){
             $product->upload_id = $uplaodDetail->id;
         }
+        
         $product->save();
 
-        return redirect()->route('product.index')->with('Success', 'Success update product to database');
+        return redirect()->route('product.index')->with('success', 'Success update product to database');
     }
 
     /**
@@ -128,6 +129,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('product.index')->with('Success', 'Success delete product to database');
+        return redirect()->route('product.index')->with('success', 'Success delete product to database');
     }
 }

@@ -55,7 +55,7 @@ class OrdersController extends Controller
                 'order' => $order
             ]);
         } catch (\Exception $e) {
-            return $this->sendFailRes($e, 401);
+            return $this->sendFailRes($e, 400);
         }
     }
 
@@ -78,7 +78,7 @@ class OrdersController extends Controller
 
             $products = json_decode($validateData['products']);
 
-            if (is_null(auth()->user()->address)) throw new \Exception('Please add your address', 401);
+            if ($request->user()->addresses()->count() == 0) throw new \Exception('Please add your address', 400);
 
             // add history payment
             $payment = Payment::create([
@@ -93,7 +93,7 @@ class OrdersController extends Controller
             $order = Order::create([
                 'customer_id' => auth()->user()->id,
                 'payment_id' => $payment->id,
-                'shipping_address' => auth()->user()->address,
+                'shipping_address' => auth()->user()->primaryAddress,
                 'shipping_cost' => Order::SHIPPING_COST,
                 'order_status' => Order::PENDING,
                 'payment_method' => $validateData['payment_method'],
@@ -102,9 +102,9 @@ class OrdersController extends Controller
 
             foreach ($products as $product) {
                 $prd = Product::findOrFail($product->id);
-                if ($prd->stock <= 0) throw new \Exception('product out of stock', 401);
+                if ($prd->stock <= 0) throw new \Exception('product out of stock', 400);
 
-                if ($prd->stock < $product->quantity) throw new \Exception('Insufficient stock', 401);
+                if ($prd->stock < $product->quantity) throw new \Exception('Insufficient stock', 400);
 
                 // add to orderItems
                 OrderItem::create([
