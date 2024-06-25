@@ -1,14 +1,16 @@
 @extends('layouts.payment')
 
+@section('header', '<meta http-equiv="refresh" content="10; url={{ config('app.frontend_url') }}">')
+
 @section('content')
 <div class="paper">
     <div class="main-contents">
-        <div class="icon warning">&#10004;</div>
+        <div class="icon danger">&#10006;</div>
         <div class="title">
-            Payment Pending
+            Payment Error
         </div>
         <div class="description">
-            Your payment is pending, please refresh this page to get update your payment info.
+            Your payment failed, please try again later or contact us for more information.
         </div>
         <div class="order-details">
             <div class="order-number-label">Transaction ID</div>

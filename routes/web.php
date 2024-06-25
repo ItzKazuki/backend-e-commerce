@@ -23,6 +23,7 @@ Route::group(['prefix'=>'payment', 'as'=>'payment.'], function() {
     Route::get('success', [PaymentController::class, 'success'])->name('success');
     Route::get('pending', [PaymentController::class, 'pending'])->name('pending');
     Route::get('cancel', [PaymentController::class, 'cancel'])->name('cancel');
+    Route::get('error', [PaymentController::class, 'error'])->name('error');
 });
 
 Route::group(['prefix'=>'auth','as'=>'auth.'], function() {

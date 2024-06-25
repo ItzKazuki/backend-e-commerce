@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link rel="icon" href="images/dollar.png" type="image/png" sizes="16x16">
-    <title>Payment Success</title>
+    <title>Payment {{ $title }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-    <meta http-equiv="refresh" content="5; url={{ config('app.frontend_url') }}">
+    @yield('header')
 </head>
 <style>
     body {
@@ -91,11 +91,10 @@
         background-position: 0 -20px;
     }
 
-    .success-icon {
+    .icon {
         text-align: center;
         font-size: 48px;
         height: 72px;
-        background: #359d00;
         border-radius: 50%;
         width: 72px;
         height: 72px;
@@ -103,7 +102,7 @@
         color: #fff;
     }
 
-    .success-title {
+    .title {
         font-size: 22px;
         font-family: 'Poppins', sans-serif;
         text-align: center;
@@ -112,13 +111,25 @@
         margin-bottom: 16px;
     }
 
-    .success-description {
+    .description {
         font-size: 15px;
         font-family: 'Poppins', sans-serif;
         line-height: 21px;
         color: #999;
         text-align: center;
         margin-bottom: 24px;
+    }
+
+    .success {
+        background: #359d00;
+    }
+
+    .warning {
+        background: yellow;
+    }
+
+    .danger {
+        background: red;
     }
 
     .order-details {

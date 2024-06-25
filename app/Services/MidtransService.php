@@ -121,6 +121,7 @@ class MidtransService
             'payment_type' => $status->payment_type,
             'signature_key' => $status->signature_key,
             'transaction_id' => $status->transaction_id,
+            'transaction_status' => $status->transaction_status,
             'merchant_id' => $status->merchant_id
         ];
     }
