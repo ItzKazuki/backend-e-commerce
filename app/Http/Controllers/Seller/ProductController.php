@@ -62,7 +62,7 @@ class ProductController extends Controller
             'upload_id' => $uplaodDetail->id
         ]);
 
-        return redirect()->route('product.index')->with('Success', 'Success add product to database');
+        return redirect()->route('product.index')->with('success', 'Success add product to database');
     }
 
     /**
