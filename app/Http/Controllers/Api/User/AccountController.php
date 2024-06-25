@@ -5,10 +5,19 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+/**
+ * @group Account
+ *
+ * API for view, edit, or delete account.
+ * @authenticated
+ */
+
 class AccountController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show user details
+     *
+     * show your account details
      */
     public function index(Request $request)
     {
@@ -18,7 +27,10 @@ class AccountController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update account details
+     *
+     * you can update account detail here with spesific request.
+     * @urlParam id required The id user. Example: user-ajnav
      */
     public function update(Request $request, string $id)
     {
@@ -26,7 +38,9 @@ class AccountController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove Account
+     *
+     * this API for remove your account from database.
      */
     public function destroy(Request $request)
     {

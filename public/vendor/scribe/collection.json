@@ -1,0 +1,788 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/local.kazukikun.space:8000"
+        }
+    ],
+    "info": {
+        "name": "EdenShop",
+        "_postman_id": "5fab2c1c-dd36-4fb7-96a8-9404034a343b",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Account",
+            "description": "\nAPI for view, edit, or delete account.",
+            "item": [
+                {
+                    "name": "Show user details",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/user",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/user"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "show your account details"
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"user\":{\"id\":\"9c5e925b-9d7e-4d5f-9502-151522a72683\",\"name\":\"Ucup\",\"about\":null,\"email\":\"ucup@account.com\",\"phone\":\"6258954384758\",\"role\":\"seller\",\"email_verified_at\":\"2024-06-25T07:19:23.000000Z\",\"address\":null,\"avatar_url\":\"https:\\\/\\\/www.gravatar.com\\\/avatar\\\/c967e0eef29cb6a6e344bdd10480d178\",\"created_at\":\"2024-06-25T07:19:23.000000Z\",\"updated_at\":\"2024-06-25T07:19:23.000000Z\"}}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Auth",
+            "description": "\nAPI for Authorization process",
+            "item": [
+                {
+                    "name": "Login to your Account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"ucup@account.com\",\"password\":\"password\"}"
+                        },
+                        "description": "This endpoint lets you login to your account.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Register new Account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"Yani\",\"email\":\"yani@account.com\",\"phone\":\"628667788990\",\"password\":\"password\",\"address\":\"jln. kemang raya 66\"}"
+                        },
+                        "description": "This endpoint lets you register new user.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Logut to your Account",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "This endpoint lets you logout to your account."
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Orders",
+            "description": "\nAPI for create, view, all orders from user",
+            "item": [
+                {
+                    "name": "Show all Orders user",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/orders"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "show all orders from user."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"orders\":[]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show spesific Order",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/orders\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/orders\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "ORD-666e",
+                                    "description": "The id order."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Show spesific order with id."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"status\":\"failed\",\"message\":\"No query results for model [App\\\\Models\\\\Order] ORD-666e\",\"error\":0}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create new orders",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/orders\/create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/orders\/create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"products\":\"[{\\\"id\\\":\\\"9c5eb8ed-0825-4b8f-a7c7-f2434b9a0677\\\",\\\"name\\\":\\\"Mini Traffic LED\\\",\\\"price\\\":15000,\\\"image\\\":\\\"http:\\\/\\\/local.kazukikun.space:8000\\\/storage\\\/products\\\/68UT7ApIO6O0uinb9YDzyDxUnAHqyZeibrPWyZt5.jpg\\\",\\\"quantity\\\":1}]\",\"payment_method\":\"soluta\"}"
+                        },
+                        "description": "Create new order, and process order request"
+                    },
+                    "response": []
+                }
+            ]
+        },
+        {
+            "name": "Payments",
+            "description": "\nAPI for create, view, all payments.",
+            "item": [
+                {
+                    "name": "GET api\/v1\/payments\/list",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/payments\/list",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/payments\/list"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": ""
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"payments\":[\"cod\",\"spay\",\"qris\",\"gopay\"]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show Payment using spesific id",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/payments\/detail\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/payments\/detail\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "PYMT-aibabasc",
+                                    "description": "The id payment."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "user can show payment with spesific id"
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 400,
+                            "body": "{\"status\":\"failed\",\"message\":\"No query results for model [App\\\\Models\\\\Payment] PYMT-aibabasc\",\"error\":0}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Products",
+            "description": "\nAPI for view all orders from user",
+            "item": [
+                {
+                    "name": "Show all products available.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/products"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"products\":[{\"id\":\"9c5eb8ed-0825-4b8f-a7c7-f2434b9a0677\",\"seller_id\":\"9c5e925c-2522-4470-a7b7-21236644525f\",\"product_name\":\"Mini Traffic LED\",\"product_desc\":\"mini trafic led yang cocok untuk pembuatan project IoT atau untuk pengembangan robotik\",\"stock\":677,\"price\":15000,\"brand\":\"Arduino Tools kit\",\"upload_id\":\"UP-667A88C1AB2DE\",\"created_at\":\"2024-06-25T09:07:14.000000Z\",\"updated_at\":\"2024-06-25T09:07:14.000000Z\",\"upload\":{\"id\":\"UP-667A88C1AB2DE\",\"user_id\":\"9c5e925c-2522-4470-a7b7-21236644525f\",\"image\":\"http:\\\/\\\/local.kazukikun.space:8000\\\/storage\\\/products\\\/68UT7ApIO6O0uinb9YDzyDxUnAHqyZeibrPWyZt5.jpg\",\"created_at\":\"2024-06-25T09:07:13.000000Z\",\"updated_at\":\"2024-06-25T09:07:13.000000Z\"},\"seller\":{\"id\":\"9c5e925c-2522-4470-a7b7-21236644525f\",\"name\":\"Yahya\",\"about\":null,\"email\":\"aya@account.com\",\"phone\":\"62899966435536\",\"role\":\"seller\",\"email_verified_at\":\"2024-06-25T07:19:23.000000Z\",\"address\":null,\"avatar_url\":\"https:\\\/\\\/www.gravatar.com\\\/avatar\\\/f214191b712acbb4095ee1f1466033b8\",\"created_at\":\"2024-06-25T07:19:23.000000Z\",\"updated_at\":\"2024-06-25T07:19:23.000000Z\"}}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show spesific product by id",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9c5eb8ed-0825-4b8f-a7c7-f2434b9a0677",
+                                    "description": "The id product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"product\":{\"id\":\"9c5eb8ed-0825-4b8f-a7c7-f2434b9a0677\",\"seller_id\":\"9c5e925c-2522-4470-a7b7-21236644525f\",\"product_name\":\"Mini Traffic LED\",\"product_desc\":\"mini trafic led yang cocok untuk pembuatan project IoT atau untuk pengembangan robotik\",\"stock\":677,\"price\":15000,\"brand\":\"Arduino Tools kit\",\"upload_id\":\"UP-667A88C1AB2DE\",\"created_at\":\"2024-06-25T09:07:14.000000Z\",\"updated_at\":\"2024-06-25T09:07:14.000000Z\",\"upload\":{\"id\":\"UP-667A88C1AB2DE\",\"user_id\":\"9c5e925c-2522-4470-a7b7-21236644525f\",\"image\":\"http:\\\/\\\/local.kazukikun.space:8000\\\/storage\\\/products\\\/68UT7ApIO6O0uinb9YDzyDxUnAHqyZeibrPWyZt5.jpg\",\"created_at\":\"2024-06-25T09:07:13.000000Z\",\"updated_at\":\"2024-06-25T09:07:13.000000Z\"},\"seller\":{\"id\":\"9c5e925c-2522-4470-a7b7-21236644525f\",\"name\":\"Yahya\",\"about\":null,\"email\":\"aya@account.com\",\"phone\":\"62899966435536\",\"role\":\"seller\",\"email_verified_at\":\"2024-06-25T07:19:23.000000Z\",\"address\":null,\"avatar_url\":\"https:\\\/\\\/www.gravatar.com\\\/avatar\\\/f214191b712acbb4095ee1f1466033b8\",\"created_at\":\"2024-06-25T07:19:23.000000Z\",\"updated_at\":\"2024-06-25T07:19:23.000000Z\"}}}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "Seller",
+            "description": "\nAPI for create, view, all product and order.",
+            "item": [
+                {
+                    "name": "Find sellers by id",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9c5e925b-9d7e-4d5f-9502-151522a72683",
+                                    "description": "The id product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "show seller with spesific id in apps",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"status\":\"success\",\"seller\":{\"id\":\"9c5e925b-9d7e-4d5f-9502-151522a72683\",\"name\":\"Ucup\",\"about\":null,\"email\":\"ucup@account.com\",\"phone\":\"6258954384758\",\"role\":\"seller\",\"email_verified_at\":\"2024-06-25T07:19:23.000000Z\",\"address\":null,\"avatar_url\":\"https:\\\/\\\/www.gravatar.com\\\/avatar\\\/c967e0eef29cb6a6e344bdd10480d178\",\"created_at\":\"2024-06-25T07:19:23.000000Z\",\"updated_at\":\"2024-06-25T07:19:23.000000Z\"}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create new Product",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/products\/create",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/products\/create"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "product_name",
+                                    "value": "Bengbeng",
+                                    "type": "text",
+                                    "description": "for display product name."
+                                },
+                                {
+                                    "key": "product_desc",
+                                    "value": "Bengbeng is a cruchy snack with chocolate",
+                                    "type": "text",
+                                    "description": "for display product description."
+                                },
+                                {
+                                    "key": "price",
+                                    "value": 2000,
+                                    "type": "text",
+                                    "description": "for display product price."
+                                },
+                                {
+                                    "key": "stock",
+                                    "value": 77,
+                                    "type": "text",
+                                    "description": "for display product stock."
+                                },
+                                {
+                                    "key": "brand",
+                                    "value": "Mayora",
+                                    "type": "text",
+                                    "description": "for display product brand."
+                                },
+                                {
+                                    "key": "product_image",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "seller create new product with image"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update Product",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "9c5e925b-9d7e-4d5f-9502-151522a72683",
+                                    "description": "The id product."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "update product with spesific id"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete Product",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/products\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/products\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "aaa",
+                                    "description": "The id product."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "seller can delete product with spesific id"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Show all orders by seller id",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/orders"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Seller can view all order with he products"
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 400,
+                            "body": "{\"status\":\"failed\",\"message\":\"No query results for model [App\\\\Models\\\\User] orders\",\"error\":0}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update orders",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/seller\/orders\/:id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/seller\/orders\/:id",
+                            "variable": [
+                                {
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": "ORD-cccc",
+                                    "description": "The id order."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Seller can update status order with spesific id"
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "key",
+                "type": "string"
+            }
+        ]
+    }
+}

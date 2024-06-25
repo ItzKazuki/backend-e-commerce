@@ -9,8 +9,23 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group Auth
+ *
+ * API for Authorization process
+ */
 class AuthController extends Controller
 {
+    /**
+     * Register new Account
+     *
+     * This endpoint lets you register new user.
+     * @bodyParam name string required for name your account. Example: Yani
+     * @bodyParam email string required for find account in database. Example: yani@account.com
+     * @bodyParam phone string required for add number phone to account. Example: 628667788990
+     * @bodyParam password string required for authorize account. Example: password
+     * @bodyParam address string for add home address to account. Example: jln. kemang raya 66
+     */
     public function register(Request $request) {
         try {
             $userData = $request->validate([
@@ -35,6 +50,13 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Login to your Account
+     *
+     * This endpoint lets you login to your account.
+     * @bodyParam email string required for find account in database. Example: ucup@account.com
+     * @bodyParam password string required for authorize account. Example: password
+     */
     public function login(Request $request) {
         try {
             //validasi form/input
@@ -63,6 +85,12 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Logut to your Account
+     *
+     * This endpoint lets you logout to your account.
+     * @authenticated
+     */
     public function logout(Request $request) {
         try {
             $request->user()->tokens()->delete();

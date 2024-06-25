@@ -1,0 +1,516 @@
+openapi: 3.0.3
+info:
+  title: EdenShop
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://local.kazukikun.space:8000'
+paths:
+  /api/v1/user:
+    get:
+      summary: 'Show user details'
+      operationId: showUserDetails
+      description: 'show your account details'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  user:
+                    id: 9c5e925b-9d7e-4d5f-9502-151522a72683
+                    name: Ucup
+                    about: null
+                    email: ucup@account.com
+                    phone: '6258954384758'
+                    role: seller
+                    email_verified_at: '2024-06-25T07:19:23.000000Z'
+                    address: null
+                    avatar_url: 'https://www.gravatar.com/avatar/c967e0eef29cb6a6e344bdd10480d178'
+                    created_at: '2024-06-25T07:19:23.000000Z'
+                    updated_at: '2024-06-25T07:19:23.000000Z'
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 9c5e925b-9d7e-4d5f-9502-151522a72683
+                      name:
+                        type: string
+                        example: Ucup
+                      about:
+                        type: string
+                        example: null
+                      email:
+                        type: string
+                        example: ucup@account.com
+                      phone:
+                        type: string
+                        example: '6258954384758'
+                      role:
+                        type: string
+                        example: seller
+                      email_verified_at:
+                        type: string
+                        example: '2024-06-25T07:19:23.000000Z'
+                      address:
+                        type: string
+                        example: null
+                      avatar_url:
+                        type: string
+                        example: 'https://www.gravatar.com/avatar/c967e0eef29cb6a6e344bdd10480d178'
+                      created_at:
+                        type: string
+                        example: '2024-06-25T07:19:23.000000Z'
+                      updated_at:
+                        type: string
+                        example: '2024-06-25T07:19:23.000000Z'
+      tags:
+        - Account
+  /api/v1/auth/login:
+    post:
+      summary: 'Login to your Account'
+      operationId: loginToYourAccount
+      description: 'This endpoint lets you login to your account.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'for find account in database.'
+                  example: ucup@account.com
+                password:
+                  type: string
+                  description: 'for authorize account.'
+                  example: password
+              required:
+                - email
+                - password
+      security: []
+  /api/v1/auth/register:
+    post:
+      summary: 'Register new Account'
+      operationId: registerNewAccount
+      description: 'This endpoint lets you register new user.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'for name your account.'
+                  example: Yani
+                email:
+                  type: string
+                  description: 'for find account in database.'
+                  example: yani@account.com
+                phone:
+                  type: string
+                  description: 'for add number phone to account.'
+                  example: '628667788990'
+                password:
+                  type: string
+                  description: 'for authorize account.'
+                  example: password
+                address:
+                  type: string
+                  description: 'for add home address to account.'
+                  example: 'jln. kemang raya 66'
+              required:
+                - name
+                - email
+                - phone
+                - password
+      security: []
+  /api/v1/auth/logout:
+    post:
+      summary: 'Logut to your Account'
+      operationId: logutToYourAccount
+      description: 'This endpoint lets you logout to your account.'
+      parameters: []
+      responses: {  }
+      tags:
+        - Auth
+  /api/v1/orders:
+    get:
+      summary: 'Show all Orders user'
+      operationId: showAllOrdersUser
+      description: 'show all orders from user.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  orders: []
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  orders:
+                    type: array
+                    example: []
+      tags:
+        - Orders
+  '/api/v1/orders/{id}':
+    get:
+      summary: 'Show spesific Order'
+      operationId: showSpesificOrder
+      description: 'Show spesific order with id.'
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'No query results for model [App\Models\Order] qui'
+                  error: 0
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\Order] qui'
+                  error:
+                    type: integer
+                    example: 0
+      tags:
+        - Orders
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the order.'
+        example: qui
+        required: true
+        schema:
+          type: string
+  /api/v1/orders/create:
+    post:
+      summary: 'Create new orders'
+      operationId: createNewOrders
+      description: 'Create new order, and process order request'
+      parameters: []
+      responses: {  }
+      tags:
+        - Orders
+  /api/v1/payments/list:
+    get:
+      summary: ''
+      operationId: getApiV1PaymentsList
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  payments:
+                    - cod
+                    - spay
+                    - qris
+                    - gopay
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payments:
+                    type: array
+                    example:
+                      - cod
+                      - spay
+                      - qris
+                      - gopay
+                    items:
+                      type: string
+      tags:
+        - Payments
+  '/api/v1/payments/detail/{id}':
+    get:
+      summary: 'Show Payment using spesific id'
+      operationId: showPaymentUsingSpesificId
+      description: 'user can show payment with spesific id'
+      parameters: []
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'No query results for model [App\Models\Payment] in'
+                  error: 0
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\Payment] in'
+                  error:
+                    type: integer
+                    example: 0
+      tags:
+        - Payments
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the detail.'
+        example: in
+        required: true
+        schema:
+          type: string
+  /api/v1/products:
+    get:
+      summary: 'Show all products available.'
+      operationId: showAllProductsAvailable
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: success
+                  products: []
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  products:
+                    type: array
+                    example: []
+      tags:
+        - Products
+      security: []
+  '/api/v1/products/{id}':
+    get:
+      summary: 'Show spesific product by id'
+      operationId: showSpesificProductById
+      description: ''
+      parameters: []
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'No query results for model [App\Models\Product] laboriosam'
+                  error: 0
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\Product] laboriosam'
+                  error:
+                    type: integer
+                    example: 0
+      tags:
+        - Products
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the product.'
+        example: laboriosam
+        required: true
+        schema:
+          type: string
+  '/api/v1/seller/{id}':
+    get:
+      summary: 'Show all sellers available'
+      operationId: showAllSellersAvailable
+      description: 'show all seller available in apps'
+      parameters: []
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'No query results for model [App\Models\User] sed'
+                  error: 0
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\User] sed'
+                  error:
+                    type: integer
+                    example: 0
+      tags:
+        - Seller
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the seller.'
+        example: sed
+        required: true
+        schema:
+          type: string
+  /api/v1/seller/products/create:
+    post:
+      summary: 'Create new Product'
+      operationId: createNewProduct
+      description: 'seller create new product with image'
+      parameters: []
+      responses: {  }
+      tags:
+        - Seller
+  '/api/v1/seller/products/{id}':
+    put:
+      summary: 'Update Product'
+      operationId: updateProduct
+      description: 'update product with spesific id'
+      parameters: []
+      responses: {  }
+      tags:
+        - Seller
+    delete:
+      summary: 'Delete Product'
+      operationId: deleteProduct
+      description: 'seller can delete product with spesific id'
+      parameters: []
+      responses: {  }
+      tags:
+        - Seller
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the product.'
+        example: id
+        required: true
+        schema:
+          type: string
+  /api/v1/seller/orders:
+    get:
+      summary: 'Show all orders by seller id'
+      operationId: showAllOrdersBySellerId
+      description: 'Seller can view all order with he products'
+      parameters: []
+      responses:
+        400:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  status: failed
+                  message: 'No query results for model [App\Models\User] orders'
+                  error: 0
+                properties:
+                  status:
+                    type: string
+                    example: failed
+                  message:
+                    type: string
+                    example: 'No query results for model [App\Models\User] orders'
+                  error:
+                    type: integer
+                    example: 0
+      tags:
+        - Seller
+  '/api/v1/seller/orders/{id}':
+    put:
+      summary: 'Update orders'
+      operationId: updateOrders
+      description: 'Seller can update status order with spesific id'
+      parameters: []
+      responses: {  }
+      tags:
+        - Seller
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the order.'
+        example: iure
+        required: true
+        schema:
+          type: string
+tags:
+  -
+    name: Account
+    description: "\nAPI for view, edit, or delete account."
+  -
+    name: Auth
+    description: "\nAPI for Authorization process"
+  -
+    name: Orders
+    description: "\nAPI for create, view, all orders from user"
+  -
+    name: Payments
+    description: "\nAPI for create, view, all payments."
+  -
+    name: Products
+    description: "\nAPI for view all orders from user"
+  -
+    name: Seller
+    description: "\nAPI for create, view, all product and order."
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.'
+security:
+  -
+    default: []

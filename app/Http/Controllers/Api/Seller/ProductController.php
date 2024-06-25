@@ -8,10 +8,25 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @group Seller
+ *
+ * API for create, view, all product and order.
+ * @authenticated
+ */
+
 class ProductController extends Controller
 {
-        /**
-     * Store a newly created resource in storage.
+    /**
+     * Create new Product
+     *
+     * seller create new product with image
+     * @bodyParam product_name string for display product name. Example: Bengbeng
+     * @bodyParam product_desc string for display product description. Example: Bengbeng is a cruchy snack with chocolate
+     * @bodyParam price int for display product price. Example: 2000
+     * @bodyParam stock int for display product stock. Example: 77
+     * @bodyParam brand string for display product brand. Example: Mayora
+     * @bodyParam product_image file for display product image.
      */
     public function store(Request $request)
     {
@@ -58,7 +73,11 @@ class ProductController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Product
+     *
+     * update product with spesific id
+     * @urlParam id required The id product. Example: 9c5e925b-9d7e-4d5f-9502-151522a72683
+     * 
      */
     public function update(Request $request, string $id)
     {
@@ -66,7 +85,10 @@ class ProductController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete Product
+     *
+     * seller can delete product with spesific id
+     * @urlParam id required The id product. Example: aaa
      */
     public function destroy(string $id)
     {

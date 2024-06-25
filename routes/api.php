@@ -5,16 +5,12 @@ use App\Http\Middleware\IsSellerMiddleware;
 use App\Http\Controllers\Api\OrdersController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\User\AccountController;
+use App\Http\Controllers\Api\Seller\SellerController;
+use App\Http\Controllers\Api\Payments\PaymentController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
-use App\Http\Controllers\Api\User\AccountController;
-use App\Models\Payment;
-use App\Models\User;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
 
 /**
  * Route utama
@@ -25,7 +21,7 @@ use App\Models\User;
  * /v1/seller/* -------> seller create remove etc
  */
 
- // versioning path
+// versioning path
 Route::prefix('v1')->middleware('api')->group(function () {
     /**
      * Auth Routes, for authentication process
@@ -40,9 +36,6 @@ Route::prefix('v1')->middleware('api')->group(function () {
     });
 
     Route::middleware('auth:sanctum')->get('user', [AccountController::class, 'index']);
-    Route::middleware('auth:sanctum')->get('seller/{id}', fn (string $id) => User::where('role', User::SELLER)->findOrFail($id));
-
-    Route::get('payments/list', fn () => ['payments' => Payment::PAYMENT_METHODS]);
 
     /**
      * List Products, for user can get all products and can be spesific by query in url
@@ -69,7 +62,9 @@ Route::prefix('v1')->middleware('api')->group(function () {
      * Payment process, this using for payment proces for callback, etc..
      *
      */
-    Route::prefix('payment')->middleware('auth:sanctum')->group(function () {
+    Route::prefix('payments')->middleware('auth:sanctum')->group(function () {
+        Route::get('list', [PaymentController::class, 'showPaymentList']);
+        Route::get('/detail/{id}', [PaymentController::class, 'show']);
         // callback here!
         // payment process here!
     });
@@ -77,6 +72,7 @@ Route::prefix('v1')->middleware('api')->group(function () {
     /**
      * Seller Dashboard, this using for seller managed orders and keuntungan.
      */
+    Route::middleware('auth:sanctum')->get('seller/{id}', [SellerController::class, 'show']);
     Route::prefix('seller')->middleware([IsSellerMiddleware::class, 'auth:sanctum'])->group(function () {
         Route::prefix('products')->group(function () {
             Route::post('/create', [SellerProductController::class, 'store']);
@@ -86,7 +82,6 @@ Route::prefix('v1')->middleware('api')->group(function () {
 
         Route::prefix('orders')->group(function () {
             Route::get('/', [SellerOrdersController::class, 'index']);
-            Route::get('/{id}', [SellerOrdersController::class, 'show']);
             Route::put('/{id}', [SellerOrdersController::class, 'update']);
         });
     });

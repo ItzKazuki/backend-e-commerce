@@ -5,10 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 
+/**
+ * @group Products
+ *
+ * API for view all orders from user
+ */
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show all products available.
      */
     public function index()
     {
@@ -18,7 +23,8 @@ class ProductController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show spesific product by id
+     * @urlParam id required The id product. Example: 9c5eb8ed-0825-4b8f-a7c7-f2434b9a0677
      */
     public function show(string $id)
     {

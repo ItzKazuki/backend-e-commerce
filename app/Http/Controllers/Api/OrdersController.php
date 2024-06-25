@@ -11,8 +11,13 @@ use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Orders
+ *
+ * API for create, view, all orders from user
+ * @authenticated
+ */
 class OrdersController extends Controller
 {
     protected $midtrans;
@@ -23,7 +28,9 @@ class OrdersController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Show all Orders user
+     *
+     * show all orders from user.
      */
     public function index()
     {
@@ -33,11 +40,15 @@ class OrdersController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show spesific Order
+     *
+     * Show spesific order with id.
+     * @urlParam id required The id order. Example: ORD-666e
      */
     public function show(string $id)
     {
         try {
+            // TODO: fix this logic becouse all user can see by order id.
             $order = Order::findOrFail($id);
 
             return $this->sendRes([
@@ -49,7 +60,11 @@ class OrdersController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create new orders
+     *
+     * Create new order, and process order request
+     * @bodyParam products string for find products. Example: [{"id":"9c5eb8ed-0825-4b8f-a7c7-f2434b9a0677","name":"Mini Traffic LED","price":15000,"image":"http://local.kazukikun.space:8000/storage/products/68UT7ApIO6O0uinb9YDzyDxUnAHqyZeibrPWyZt5.jpg","quantity":1}]
+     * @bodyParam payment_method string for payment method. gopay
      */
     public function store(Request $request)
     {
