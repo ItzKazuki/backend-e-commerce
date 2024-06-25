@@ -7,6 +7,7 @@ use App\Http\Middleware\IsSellerMiddleware;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\Admin\Auth\LogoutController;
+use Spatie\Health\Http\Controllers\HealthCheckResultsController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\OrdersController as AdminOrdersController;
 use App\Http\Controllers\Admin\SellerController as AdminSellerController;
@@ -14,6 +15,8 @@ use App\Http\Controllers\Admin\UploadController as AdminUploadController;
 use App\Http\Controllers\Seller\OrderController as SellerOrderController;
 use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
+
+Route::get('app/health', HealthCheckResultsController::class);
 
 Route::group(['prefix'=>'payment', 'as'=>'payment.'], function() {
     Route::get('wait-confirm', [PaymentController::class, 'waitConfirm'])->name('wait-confirm');
