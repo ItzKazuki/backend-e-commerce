@@ -36,11 +36,11 @@
                 <td>{{ $order->payment_method }}</td>
                 <td>{{ $order->order_status }}</td>
                 <td>{{ $order->total_price }}</td>
-                <td><a href="{{ route('product.show', ['product' => $order->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
-                    <a href="{{ route('product.edit', ['product' => $order->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm" onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin ?')){document.getElementById('remove-{{$order->id}}-form').submit();}" title="Remove product"><i class="bi bi-trash"></i></a>
+                <td><a href="{{ route('seller.orders.show', ['order' => $order->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
+                    <a href="{{ route('seller.orders.edit', ['order' => $order->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
+                    <a href="#" class="btn btn-danger btn-sm" onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin ?')){document.getElementById('remove-{{$order->id}}-form').submit();}" title="Remove order"><i class="bi bi-trash"></i></a>
 
-                    <form id="remove-{{$order->id}}-form" action="{{ route('product.destroy', ['product' => $order->id]) }}" method="POST" style="display: none;">
+                    <form id="remove-{{$order->id}}-form" action="{{ route('seller.orders.destroy', ['order' => $order->id]) }}" method="POST" style="display: none;">
                         @csrf
                         @method('DELETE')
                     </form>

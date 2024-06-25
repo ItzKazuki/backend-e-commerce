@@ -35,7 +35,12 @@
                 <td>{{ $user->phone }}</td>
                 <td><a href="{{ route('admin.users.show', ['user' => $user->id]) }}" class="btn btn-primary btn-sm" title="Show User Detail"><i class="bi bi-eye"></i></a>
                     <a href="{{ route('admin.users.edit', ['user' => $user->id]) }}" class="btn btn-warning btn-sm" title="Edit User"><i class="bi bi-pen"></i></a>
-                    value="{{ $product->product_name }}
+                    <a href="#" class="btn btn-danger btn-sm" onclick="event.preventDefault(); if(confirm('Apakah Anda Yakin ?')){document.getElementById('remove-{{$user->id}}-form').submit();}" title="Remove User"><i class="bi bi-trash"></i></a>
+
+                    <form id="remove-{{$user->id}}-form" action="{{ route('admin.users.destroy', ['user' => $user->id]) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 </td>
             </tr>
           @endforeach

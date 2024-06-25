@@ -26,7 +26,7 @@
                     <input type="text" class="form-control" name="product_name" id="product_name">
                 </div>
                 <div class="col-12">
-                    <label for="product_desc" class="col-sm-2 col-form-label">Description</label>
+                    <label for="product_desc" class="col-sm-2 col-form-label">Description Product</label>
                     <div class="col-sm-10">
                       <textarea id="product_desc" name="product_desc" class="form-control" style="height: 100px"></textarea>
                     </div>

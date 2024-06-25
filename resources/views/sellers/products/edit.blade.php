@@ -27,8 +27,10 @@
                     <input type="text" class="form-control" name="product_name" id="product_name" value="{{ $product->product_name }}">
                 </div>
                 <div class="col-12">
-                    <label for="product_desc" class="form-label">Description Product</label>
-                    <input type="product_desc" class="form-control" name="product_desc" id="product_desc" value="{{ $product->product_desc }}">
+                    <label for="product_desc" class="col-sm-2 col-form-label">Description Product</label>
+                    <div class="col-sm-10">
+                      <textarea id="product_desc" name="product_desc" class="form-control" style="height: 100px">{{ $product->product_desc }}</textarea>
+                    </div>
                 </div>
                 <div class="col-12">
                     <label for="price" class="form-label">Price</label>
