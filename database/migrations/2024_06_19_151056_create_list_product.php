@@ -17,7 +17,7 @@ return new class extends Migration
             // $table->string('upload_id')->nullable(false); TODO: fix this if error
             $table->string('product_name');
             $table->string('product_desc');
-            $table->decimal('stock');
+            $table->bigInteger('stock');
             $table->bigInteger('price');
             $table->string('brand');
             $table->foreign('seller_id')->references('id')->on('users');

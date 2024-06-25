@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $with = ['orderItems'];
+    protected $with = ['orderItems', 'payment', 'user'];
 
     protected $fillable = [
         'customer_id',

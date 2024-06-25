@@ -42,8 +42,6 @@ class ProductController extends Controller
             'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        // dd($request->all());
-
         $imagePath = $request->file('product_image')->store('products');
         $imageUrl = Storage::url($imagePath);
 
