@@ -23,6 +23,12 @@ use App\Http\Controllers\Api\Seller\ProductController as SellerProductController
 
 // versioning path
 Route::prefix('v1')->middleware('api')->group(function () {
+    Route::get('/app/details', fn () => [
+        'name' => config('app.name'),
+        'version' => config('app.version'),
+        'build' => config('app.env'),
+        'created_by' => 'Kazukikun'
+    ]);
     /**
      * Auth Routes, for authentication process
      *
