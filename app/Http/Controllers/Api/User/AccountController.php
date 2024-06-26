@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 
 /**
  * @group Account
@@ -123,7 +124,7 @@ class AccountController extends Controller
                 'You can only add 5 addresses', 400
             );
 
-            if($request->user()->addresses()->count() == 0) {   
+            if($request->user()->addresses()->count() == 0) {
                 $addressData['is_primary'] = true;
             }
 
@@ -158,8 +159,14 @@ class AccountController extends Controller
 
             if ($address) {
                 $address->update(['is_primary' => true]);
+
+                sleep(3);
+
+                $user = User::find($request->user()->id);
+
                 return $this->sendRes([
-                    'message' => 'Address set as primary successfully'
+                    'message' => 'Address set as primary successfully',
+                    'user' => $user
                 ]);
             }
 
@@ -199,10 +206,19 @@ class AccountController extends Controller
                 'postal_code' => 'string|max:20',
             ]);
 
-            $request->user()->address()->create($addressData);
+            $address = Address::find($id);
+
+            if(!$address) throw new Exception('Address not found', 404);
+
+            $address->update($addressData);
+
+            sleep(3);
+
+            $user = User::find($request->user()->id);
 
             return $this->sendRes([
-                'message' => 'Address added successfully'
+                'message' => 'Address update successfully',
+                'user' => $user
             ]);
         } catch(Exception $e) {
             return $this->sendFailRes($e);
@@ -223,10 +239,15 @@ class AccountController extends Controller
 
             $address = $user->addresses()->find($id);
 
+            sleep(3);
+
+            $user = User::find($request->user()->id);
+
             if ($address) {
                 $address->delete();
                 return $this->sendRes([
-                    'message' => 'Address deleted successfully'
+                    'message' => 'Address deleted successfully',
+                    'user' => $user
                 ]);
             }
 
