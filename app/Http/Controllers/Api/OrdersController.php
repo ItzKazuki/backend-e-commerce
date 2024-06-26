@@ -35,7 +35,7 @@ class OrdersController extends Controller
     public function index()
     {
         return $this->sendRes([
-            'orders' => Order::where('customer_id', auth()->user()->id)->get()
+            'orders' => Order::where('customer_id', auth()->user()->id)->orderBy('created_at', 'desc')->get()
         ]);
     }
 

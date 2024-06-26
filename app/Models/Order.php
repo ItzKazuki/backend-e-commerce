@@ -9,7 +9,7 @@ class Order extends Model
 {
     use HasFactory;
 
-    protected $with = ['orderItems', 'payment', 'user'];
+    protected $with = ['orderItems', 'payment', 'user', 'address'];
 
     protected $fillable = [
         'customer_id',
@@ -58,6 +58,6 @@ class Order extends Model
     }
 
     public function address() {
-        return $this->hasOne(Address::class, 'shipping_address_id');
+        return $this->belongsTo(Address::class, 'shipping_address_id', 'id');
     }
 }

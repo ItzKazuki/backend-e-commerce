@@ -13,23 +13,33 @@
         </nav>
     </div>
 
+    @session('error')
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="bi bi-exclamation-octagon me-1"></i>
+        @session('error')
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endsession
+
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Update Product Form</h5>
 
             <!-- Vertical Form -->
-            <form class="row g-3" action="{{ route('seller.product.update', ['product' => $product->id]) }}" method="POST" enctype="multipart/form-data">
+            <form class="row g-3" action="{{ route('seller.product.update', ['product' => $product->id]) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
                 <div class="col-12">
                     <label for="product_name" class="form-label">Name Product</label>
-                    <input type="text" class="form-control" name="product_name" id="product_name" value="{{ $product->product_name }}">
+                    <input type="text" class="form-control" name="product_name" id="product_name"
+                        value="{{ $product->product_name }}">
                 </div>
                 <div class="col-12">
                     <label for="product_desc" class="col-sm-2 col-form-label">Description Product</label>
                     <div class="col-sm-10">
-                      <textarea id="product_desc" name="product_desc" class="form-control" style="height: 100px">{{ $product->product_desc }}</textarea>
+                        <textarea id="product_desc" name="product_desc" class="form-control" style="height: 100px">{{ $product->product_desc }}</textarea>
                     </div>
                 </div>
                 <div class="col-12">
