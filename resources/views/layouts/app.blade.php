@@ -380,6 +380,8 @@
         </div>
         <div class="credits">
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            <br>
+            <p class="text-center">{{ config('app.name') }} v{{ config('app.version') }}</p>
         </div>
     </footer><!-- End Footer -->
 
