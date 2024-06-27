@@ -42,21 +42,26 @@ class AccountController extends Controller
     public function update(Request $request)
     {
         try {
+            $user = $request->user();
+
             $userData = $request->validate([
                 'name' => 'required|min:3|max:70',
                 'about' => 'string',
-                'email' => 'required|string|unique:users',
-                'phone' => 'required|string|unique:users'
+                'email' => 'required|string|unique:users,email,' . $user->id,
+                'phone' => 'required|string'
             ]);
-
-            $user = $request->user();
 
             if(!$user) throw new Exception('User not found', 404);
 
             $user->update($userData);
 
+            sleep(3);
+
+            $updatedUser = User::find($user->id);
+
             return $this->sendRes([
-                'message' => 'Account updated successfully'
+                'message' => 'Account updated successfully',
+                'user' => $updatedUser
             ]);
 
         } catch (Exception $e) {
