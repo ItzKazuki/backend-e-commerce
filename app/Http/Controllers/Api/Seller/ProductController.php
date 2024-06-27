@@ -6,6 +6,7 @@ use App\Models\Upload;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\Product\ProductCreated;
 use Exception;
 use Illuminate\Support\Facades\Storage;
 
@@ -56,6 +57,8 @@ class ProductController extends Controller
 
             // set productData to Product
             $product = Product::create($productData);
+
+            $request->user()->notify(new ProductCreated($request->user(), $product));
 
             return $this->sendRes([
                 'message' => 'Product created successfully',

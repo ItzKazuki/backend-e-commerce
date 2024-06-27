@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Notifications\Order\OrderCreated;
+use App\Notifications\Payment\PaymentCreated;
+use App\Notifications\UserOrderCreated;
 
 /**
  * @group Orders
@@ -71,6 +74,8 @@ class OrdersController extends Controller
         try {
             DB::beginTransaction();
 
+            $user = $request->user();
+
             $validateData = $request->validate([
                 'products' => 'required',
                 'payment_method' => 'required'
@@ -82,7 +87,7 @@ class OrdersController extends Controller
 
             // add history payment
             $payment = Payment::create([
-                'user_id' => auth()->user()->id,
+                'user_id' => $user->id,
                 'invoice_number' => 'INV',
                 'payment_method' => $validateData['payment_method'],
                 'payment_status' => Payment::PENDING,
@@ -91,7 +96,7 @@ class OrdersController extends Controller
 
             // add to orders
             $order = Order::create([
-                'customer_id' => auth()->user()->id,
+                'customer_id' => $user->id,
                 'payment_id' => $payment->id,
                 'shipping_address_id' => $request->user()->primaryAddress->id,
                 'shipping_cost' => Order::SHIPPING_COST,
@@ -130,7 +135,7 @@ class OrdersController extends Controller
             $invoice = Invoice::create([
                 'payment_id' => $payment->id,
                 'invoice_number' => 'INV/' . date('Y') . '/' . strtoupper(uniqid()),
-                'customer_name' => auth()->user()->name,
+                'customer_name' => $user->name,
                 'invoice_amount' => $order->total_price,
             ]);
 
@@ -139,6 +144,11 @@ class OrdersController extends Controller
 
             // do get snap token here
             $payment_redirect = $this->paymentMidtrans($payment, $products, $order);
+
+            // create notification
+
+            $user->notify(new OrderCreated($user, $order));
+            $user->notify(new PaymentCreated($payment, $payment_redirect));
 
             DB::commit();
 

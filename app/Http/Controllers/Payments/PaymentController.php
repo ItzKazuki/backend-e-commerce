@@ -6,6 +6,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Notifications\Payment\PaymentSuccess;
 use App\Services\MidtransService;
 
 class PaymentController extends Controller
@@ -44,6 +45,8 @@ class PaymentController extends Controller
             'payment_method' => $paymentStatus['payment_type'],
             'payment_status' => Payment::COMPLETED
         ]);
+
+        $order->user->notify(new PaymentSuccess(Payment::find($order->payment->id)));
 
         return view('payments.success', [
             'title' => 'Success',
