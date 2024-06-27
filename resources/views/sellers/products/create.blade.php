@@ -52,7 +52,7 @@
                     <input type="text" class="form-control" name="brand" id="brand">
                 </div>
                 <div class="col-12">
-                    <label for="product_image" class="form-label">Brand</label>
+                    <label for="product_image" class="form-label">Product Image</label>
                     <input type="file" class="form-control" name="product_image" id="product_image">
                 </div>
                 <div class="text-center">
