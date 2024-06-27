@@ -14,9 +14,8 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('seller_id')->nullable(false);
-            // $table->string('upload_id')->nullable(false); TODO: fix this if error
             $table->string('product_name');
-            $table->string('product_desc');
+            $table->text('product_desc');
             $table->bigInteger('stock');
             $table->bigInteger('price');
             $table->string('brand');

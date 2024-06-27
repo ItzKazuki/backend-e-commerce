@@ -44,7 +44,7 @@ class AccountController extends Controller
         try {
             $userData = $request->validate([
                 'name' => 'required|min:3|max:70',
-                'about' => 'string|max:255',
+                'about' => 'string',
                 'email' => 'required|string|unique:users',
                 'phone' => 'required|string|unique:users'
             ]);
@@ -249,7 +249,7 @@ class AccountController extends Controller
                 sleep(3);
 
                 $user = User::find($request->user()->id);
-                
+
                 return $this->sendRes([
                     'message' => 'Address deleted successfully',
                     'user' => $user

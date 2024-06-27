@@ -34,7 +34,7 @@ class ProductController extends Controller
         try {
             $productData = $request->validate([
                 'product_name' => 'required|string|max:100',
-                'product_desc' => 'required|string|max:255',
+                'product_desc' => 'required|string',
                 'price' => 'required|integer',
                 'stock' => 'required|integer',
                 'brand' => 'required|string|max:100',
@@ -88,7 +88,7 @@ class ProductController extends Controller
 
             $productData = $request->validate([
                 'product_name' => 'string|max:100',
-                'product_desc' => 'string|max:255',
+                'product_desc' => 'string',
                 'price' => 'integer',
                 'stock' => 'integer',
                 'brand' => 'string|max:100',
