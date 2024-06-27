@@ -100,6 +100,7 @@ class AccountController extends Controller
      *
      * this API for add address of user.
      * @bodyParam address_title string required title for identified address. Example: Home
+     * @bodyParam address_name string required title for identified address customer name. Example: Adi
      * @bodyParam address_line1 string required addres1 for identified address. Example: jln. kp baru no 55
      * @bodyParam address_line2 string addres2 for identified address. Example: jln. kp baru no 55
      * @bodyParam city string required city for identified address. Example: jakarta
@@ -112,6 +113,7 @@ class AccountController extends Controller
         try {
             $addressData = $request->validate([
                 'address_title' => 'required|string|max:255',
+                'address_name' => 'required|string|max:255',
                 'address_line1' => 'required|string|max:255',
                 'address_line2' => 'max:255',
                 'city' => 'required|string|max:255',
@@ -182,6 +184,7 @@ class AccountController extends Controller
      * this API use for update address details
      * @urlParam id required The id address. Example: address-1
      * @bodyParam address_title string required title for identified address. Example: Home
+     * @bodyParam address_name string required title for identified address customer name. Example: Adi
      * @bodyParam address_line1 string required addres1 for identified address. Example: jln. kp baru no 55
      * @bodyParam address_line2 string addres2 for identified address. Example: jln. kp baru no 55
      * @bodyParam city string required city for identified address. Example: jakarta
@@ -198,6 +201,7 @@ class AccountController extends Controller
 
             $addressData = $request->validate([
                 'address_title' => 'string|max:255',
+                'address_name' => 'string|max:255',
                 'address_line1' => 'string|max:255',
                 'address_line2' => 'max:255',
                 'city' => 'string|max:255',
@@ -239,12 +243,13 @@ class AccountController extends Controller
 
             $address = $user->addresses()->find($id);
 
-            sleep(3);
-
-            $user = User::find($request->user()->id);
-
             if ($address) {
                 $address->delete();
+
+                sleep(3);
+
+                $user = User::find($request->user()->id);
+                
                 return $this->sendRes([
                     'message' => 'Address deleted successfully',
                     'user' => $user
