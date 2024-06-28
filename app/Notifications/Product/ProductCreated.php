@@ -40,7 +40,9 @@ class ProductCreated extends Notification
         return [
             'user' => $this->user,
             'product' => $this->product,
-            'message' => 'Success Create new product'
+            'status' => 'success',
+            'message' => 'Success Create new product',
+            'desc' => 'Product with id: ' . $this->product->id . ' success created'
         ];
     }
 

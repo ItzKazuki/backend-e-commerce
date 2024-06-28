@@ -2,8 +2,8 @@
 
     <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
         <i class="bi bi-bell"></i>
-        @if(auth()->user()->unreadNotifications->count())
-        <span class="badge bg-primary badge-number">{{ auth()->user()->unreadNotifications->count() }}</span>
+        @if (auth()->user()->unreadNotifications->count())
+            <span class="badge bg-primary badge-number">{{ auth()->user()->unreadNotifications->count() }}</span>
         @endif
     </a><!-- End Notification Icon -->
 
@@ -13,65 +13,38 @@
             <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
         </li>
 
-        @foreach (auth()->user()->notifications as $notif)
-        <li>
-            <hr class="dropdown-divider">
-        </li>
+        @php
+            $notifications = auth()->user()->notifications;
+        @endphp
 
-        <li class="notification-item">
-            <i class="bi bi-exclamation-circle text-warning"></i>
-            <div>
-                <h4>{{$notif->data['message']}}</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
-            </div>
-        </li>
+        @foreach ($notifications as $notif)
+            <li>
+                <hr class="dropdown-divider">
+            </li>
 
-        <li>
-            <hr class="dropdown-divider">
-        </li>
+            <li class="notification-item">
+                <i
+                    class="{{ $notif->data['status'] == 'success' ? 'bi bi-check-circle text-success' : 'bi bi-x-circle text-danger' }}"></i>
+                <div onclick="window.location.href = 'notifications/{{ $notif->id }}'">
+                    <h4>{{ $notif->data['message'] }}
+                        @if ($notif->read_at == null)
+                            <span class="badge rounded-pill bg-primary ">unread</span>
+                        @endif
+                    </h4>
+                    <p>{{ $notif->data['desc'] }}</p>
+                    <p>{{ $notif->created_at->diffForhumans() }}</p>
+                </div>
+            </li>
+
+            <li>
+                <hr class="dropdown-divider">
+            </li>
         @endforeach
 
-        {{-- <li class="notification-item">
-            <i class="bi bi-x-circle text-danger"></i>
-            <div>
-                <h4>Atque rerum nesciunt</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>1 hr. ago</p>
-            </div>
-        </li>
-
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-
-        <li class="notification-item">
-            <i class="bi bi-check-circle text-success"></i>
-            <div>
-                <h4>Sit rerum fuga</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>2 hrs. ago</p>
-            </div>
-        </li>
-
-        <li>
-            <hr class="dropdown-divider">
-        </li>
-
-        <li class="notification-item">
-            <i class="bi bi-info-circle text-primary"></i>
-            <div>
-                <h4>Dicta reprehenderit</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>4 hrs. ago</p>
-            </div>
-        </li>
-
-        <li>
-            <hr class="dropdown-divider">
-        </li> --}}
         <li class="dropdown-footer">
-            <a href="#">Show all notifications</a>
+            <a
+                href="{{ auth()->user()->role == 'seller' ? route('seller.notifications.index') : route('admin.notifications.index') }}">Show
+                all notifications</a>
         </li>
 
     </ul><!-- End Notification Dropdown Items -->
