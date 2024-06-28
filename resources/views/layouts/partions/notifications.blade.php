@@ -14,7 +14,7 @@
         </li>
 
         @php
-            $notifications = auth()->user()->notifications;
+            $notifications = auth()->user()->notifications->take(4);
         @endphp
 
         @foreach ($notifications as $notif)
