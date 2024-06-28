@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use App\Http\Controllers\Controller;
+use App\Notifications\Order\OrderChanged;
 use App\Notifications\Payment\PaymentCancel;
 use App\Notifications\Payment\PaymentSuccess;
 
@@ -47,7 +49,10 @@ class PaymentController extends Controller
             'payment_status' => Payment::COMPLETED
         ]);
 
+        $user = User::findOrFail($order->user->id);
+
         $order->user->notify(new PaymentSuccess(Payment::find($order->payment->id)));
+        $order->user->notify(new OrderChanged($user, $order, Order::PROCESSING));
 
         return view('payments.success', [
             'title' => 'Success',
@@ -70,7 +75,10 @@ class PaymentController extends Controller
                 'payment_status' => Payment::CANCELLED
             ]);
 
-            $order->user()->notify(new PaymentCancel($order));
+            $user = User::findOrFail($order->user->id);
+
+            $order->user->notify(new PaymentCancel($order));
+            $order->user->notify(new OrderChanged($user, $order, Order::CANCELLED));
 
             return view('payments.cancel', [
                 'title' => 'Cancel',

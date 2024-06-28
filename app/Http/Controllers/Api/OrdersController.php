@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Invoice;
 use App\Models\Payment;
@@ -12,6 +13,7 @@ use App\Services\MidtransService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\Order\OrderCreated;
+use App\Notifications\Order\OrderSellerCreated;
 
 /**
  * @group Orders
@@ -50,7 +52,7 @@ class OrdersController extends Controller
     {
         try {
             // TODO: fix this logic becouse all user can see by order id.
-            $order = Order::findOrFail($id);
+            $order = Order::where('customer_id', auth()->user()->id)->findOrFail($id);
 
             return $this->sendRes([
                 'order' => $order
@@ -147,6 +149,15 @@ class OrdersController extends Controller
 
             $user->notify(new OrderCreated($user, $order, $payment_redirect));
 
+            // Retrieve sellers associated with the order
+            $sellersID = $this->getSellersForOrder($order); // Implement this method
+
+            // Send notifications to each seller
+            foreach ($sellersID as $sellerId) {
+                $seller = User::findOrFail($sellerId);
+                $seller->notify(new OrderSellerCreated($order));
+            }
+
             DB::commit();
 
             return $this->sendRes([
@@ -154,26 +165,39 @@ class OrdersController extends Controller
                 'url' => $payment_redirect,
                 'order' => $order
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->sendFailRes($e);
         }
     }
 
+    // Helper method to get sellers for the order
+    private function getSellersForOrder(Order $order)
+    {
+        $sellers = [];
+        foreach ($order->orderItems as $orderItem) {
+            $product = $orderItem->product;
+            $sellerId = $product->seller_id; // Assuming you have a 'seller_id' field in your Product model
+            if (!in_array($sellerId, $sellers)) {
+                $sellers[] = $sellerId;
+            }
+        }
+        return $sellers;
+    }
+
     public function paymentMidtrans($payment, $products, $order)
     {
         $params = $this->midtrans->paramsGenerator($products, $order);
 
-        if($order->payment_method == 'qris' || $payment->payment_method == 'qris') {
+        if ($order->payment_method == 'qris' || $payment->payment_method == 'qris') {
             return $this->midtrans->getPaymentMidtrans($params); // return redirect_url and token
         }
 
-        if($order->payment_method == 'gopay' || $payment->payment_method == 'gopay') {
+        if ($order->payment_method == 'gopay' || $payment->payment_method == 'gopay') {
             return $this->midtrans->getPaymentGopay($params); // return token, url, etc...
         }
 
-        if($order->payment_method == 'cod' || $payment->payment_method == 'cod') {
+        if ($order->payment_method == 'cod' || $payment->payment_method == 'cod') {
             return [
                 'redirect_url' => route('payment.wait-confirm', ['order_id' => $order->id])
             ];

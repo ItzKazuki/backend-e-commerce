@@ -15,14 +15,16 @@ class OrderChanged extends Notification
 
     protected $user;
     protected $order;
+    protected $status;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Order $order)
+    public function __construct(User $user, Order $order, $status)
     {
         $this->order = $order;
         $this->user = $user;
+        $this->status = $status;
     }
 
     /**
@@ -41,8 +43,8 @@ class OrderChanged extends Notification
             'user' => $this->user,
             'order' => $this->order,
             'title' => 'Your Order on ' . $this->order->order_status,
-            'status' => 'success',
-            'message' => 'Your order with id: ' . $this->order->id . ' now on process, please wait for delivery from seller'
+            'status' => $this->status,
+            'message' => 'Your order with id: ' . $this->order->id . ' now on ' . ($this->status == 'process' ? 'process, please wait for delivery from seller' : $this->status)
         ];
     }
 
