@@ -60,7 +60,11 @@ class ProductController extends Controller
 
         $request->user()->notify(new ProductCreated($request->user(), $product));
 
-        if(!$product) return redirect()->back()->with('error', 'Failed add product to database');
+        if(!$product) {
+            $request->user()->notify(new ProductCreated($request->user(), $product, 'failed'));
+
+            return redirect()->back()->with('error', 'Failed add product to database');
+        }
 
         return redirect()->route('seller.product.index')->with('success', 'Success add product to database');
     }

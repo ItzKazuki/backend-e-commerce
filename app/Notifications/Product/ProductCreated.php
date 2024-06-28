@@ -15,14 +15,16 @@ class ProductCreated extends Notification
 
     protected $user;
     protected $product;
+    protected $status;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Product $product)
+    public function __construct(User $user, Product $product, $status = 'success')
     {
         $this->user = $user;
         $this->product = $product;
+        $this->status = $status;
     }
 
     /**
@@ -40,9 +42,9 @@ class ProductCreated extends Notification
         return [
             'user' => $this->user,
             'product' => $this->product,
-            'status' => 'success',
-            'message' => 'Success Create new product',
-            'desc' => 'Product with id: ' . $this->product->id . ' success created'
+            'status' => $this->status,
+            'title' => $this->status == 'success' ? 'Success Create new product' : 'Failed Create new product',
+            'message' => 'Product with id: ' . $this->product->id . ($this->status == 'success' ? ' success created' : ' failed created')
         ];
     }
 

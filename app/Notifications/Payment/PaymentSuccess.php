@@ -35,8 +35,10 @@ class PaymentSuccess extends Notification
     public function toDatabase(object $notifiable): array
     {
         return [
-            'message' => 'Payment successful with id: ' . $this->payment->id,
-            'payment' => $this->payment
+            'payment' => $this->payment,
+            'title' => 'Payment Successful',
+            'status' => 'success',
+            'message' => 'Your payment of ' . $this->payment->amount . ' was successful with id: ' . $this->payment->id,
         ];
     }
 

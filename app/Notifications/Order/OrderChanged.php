@@ -2,21 +2,27 @@
 
 namespace App\Notifications\Order;
 
+use App\Models\User;
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
 
 class OrderChanged extends Notification
 {
     use Queueable;
 
+    protected $user;
+    protected $order;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(User $user, Order $order)
     {
-        //
+        $this->order = $order;
+        $this->user = $user;
     }
 
     /**
@@ -26,18 +32,18 @@ class OrderChanged extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    public function toDatabase(object $notifiable): array
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return [
+            'user' => $this->user,
+            'order' => $this->order,
+            'title' => 'Your Order on ' . $this->order->order_status,
+            'status' => 'success',
+            'message' => 'Your order with id: ' . $this->order->id . ' now on process, please wait for delivery from seller'
+        ];
     }
 
     /**

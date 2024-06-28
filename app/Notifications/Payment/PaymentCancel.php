@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Payment;
 
+use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,12 +12,14 @@ class PaymentCancel extends Notification
 {
     use Queueable;
 
+    protected $order;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct(Order $order)
     {
-        //
+        $this->order = $order;
     }
 
     /**
@@ -26,18 +29,17 @@ class PaymentCancel extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
-    /**
-     * Get the mail representation of the notification.
-     */
-    public function toMail(object $notifiable): MailMessage
+    public function toDatabase(object $notifiable)
     {
-        return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+        return [
+            'order' => $this->order,
+            'title' => 'Order Canceled',
+            'status' => 'success',
+            'message' => 'Your order has been canceled with id: ' . $this->order->id,
+        ];
     }
 
     /**

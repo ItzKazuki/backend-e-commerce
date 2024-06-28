@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\Seller;
 
+use Exception;
 use App\Models\Upload;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Notifications\Product\ProductCreated;
-use Exception;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\Product\ProductCreated;
 
 /**
  * @group Seller

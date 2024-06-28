@@ -12,8 +12,6 @@ use App\Services\MidtransService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Notifications\Order\OrderCreated;
-use App\Notifications\Payment\PaymentCreated;
-use App\Notifications\UserOrderCreated;
 
 /**
  * @group Orders
@@ -147,8 +145,7 @@ class OrdersController extends Controller
 
             // create notification
 
-            $user->notify(new OrderCreated($user, $order));
-            $user->notify(new PaymentCreated($payment, $payment_redirect));
+            $user->notify(new OrderCreated($user, $order, $payment_redirect));
 
             DB::commit();
 

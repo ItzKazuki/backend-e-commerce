@@ -24,8 +24,8 @@
         @foreach ($notifications as $notif)
         <div class="card">
             <div class="card-body">
-              <h5 class="card-title">{{$notif->data['message']}}</h5>
-              <p>{{$notif->data['desc']}}</p>
+              <h5 class="card-title">{{$notif->data['title']}}</h5>
+              <p>{{$notif->data['message']}}</p>
             </div>
           </div>
         @endforeach

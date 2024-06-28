@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Api\User;
 
-use App\Http\Controllers\Controller;
-use App\Notifications\UserRegistered;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Notifications\DatabaseNotification;
-use Illuminate\Notifications\Notification;
 
 class NotificationController extends Controller
 {
@@ -38,15 +36,7 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        // send basic notifications
-
-        $user = $request->user();
-
-        $user->notify(new UserRegistered($user));
-
-        return $this->sendRes([
-            'message' => 'Notification sent successfully.',
-        ]);
+        //
     }
 
     /**

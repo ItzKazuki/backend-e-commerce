@@ -36,7 +36,9 @@ class UserRegistered extends Notification
         return [
             'user_id' => $this->user->id,
             'user_name' => $this->user->name,
-            'message' => 'User ' . $this->user->name . ' Success registered.',
+            'title' => 'Success Registered',
+            'status' => 'success',
+            'message' => 'Welcome ' . $this->user->name . '. please complete your profile at profile page.',
         ];
     }
 

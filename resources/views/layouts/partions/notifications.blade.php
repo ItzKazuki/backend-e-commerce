@@ -26,12 +26,12 @@
                 <i
                     class="{{ $notif->data['status'] == 'success' ? 'bi bi-check-circle text-success' : 'bi bi-x-circle text-danger' }}"></i>
                 <div onclick="window.location.href = 'notifications/{{ $notif->id }}'">
-                    <h4>{{ $notif->data['message'] }}
+                    <h4>{{ $notif->data['title'] }}
                         @if ($notif->read_at == null)
                             <span class="badge rounded-pill bg-primary ">unread</span>
                         @endif
                     </h4>
-                    <p>{{ $notif->data['desc'] }}</p>
+                    <p>{{ $notif->data['message'] }}</p>
                     <p>{{ $notif->created_at->diffForhumans() }}</p>
                 </div>
             </li>

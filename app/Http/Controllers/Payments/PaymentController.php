@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Payments;
 
 use App\Models\Order;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Payment;
-use App\Notifications\Payment\PaymentSuccess;
+use Illuminate\Http\Request;
 use App\Services\MidtransService;
+use App\Http\Controllers\Controller;
+use App\Notifications\Payment\PaymentCancel;
+use App\Notifications\Payment\PaymentSuccess;
 
 class PaymentController extends Controller
 {
@@ -69,6 +70,8 @@ class PaymentController extends Controller
                 'payment_status' => Payment::CANCELLED
             ]);
 
+            $order->user()->notify(new PaymentCancel($order));
+
             return view('payments.cancel', [
                 'title' => 'Cancel',
                 'order' => $order
@@ -105,7 +108,7 @@ class PaymentController extends Controller
 
         $paymentStatus = $this->midtrans->getPaymentStatus($request->order_id);
 
-        if($paymentStatus['transaction_status'] == 'settlement') return redirect()->route('payments.success', ['order_id', $request->order_id]);
+        if ($paymentStatus['transaction_status'] == 'settlement') return redirect()->route('payments.success', ['order_id', $request->order_id]);
 
         return view('payments.pending', [
             'title' => 'Pending',

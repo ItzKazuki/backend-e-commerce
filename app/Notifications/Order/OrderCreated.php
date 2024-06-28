@@ -15,14 +15,16 @@ class OrderCreated extends Notification
 
     protected $user;
     protected $order;
+    protected $payment_url;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(User $user, Order $order)
+    public function __construct(User $user, Order $order, $payment_url)
     {
         $this->order = $order;
         $this->user = $user;
+        $this->payment_url = $payment_url;
     }
 
     /**
@@ -40,7 +42,10 @@ class OrderCreated extends Notification
         return [
             'user' => $this->user,
             'order' => $this->order,
-            'message' => 'Success Create new order with id: ' . $this->order->id
+            'payment_url' => $this->payment_url,
+            'title' => 'Order success created',
+            'status' => 'success',
+            'message' => 'Your order with id: ' . $this->order->id . ' has been created, please complete your payment.'
         ];
     }
 
