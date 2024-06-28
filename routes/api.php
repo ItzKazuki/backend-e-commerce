@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Payments\PaymentController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
 use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
+use App\Http\Controllers\Api\User\NotificationController;
 
 /**
  * Route utama
@@ -45,6 +46,10 @@ Route::prefix('v1')->middleware('api')->group(function () {
         Route::get('/', [AccountController::class, 'index']);
         Route::put('/', [AccountController::class, 'update']);
         Route::delete('/', [AccountController::class, 'destroy']);
+
+        Route::get('notifications', [NotificationController::class, 'index']);
+        Route::get('notifications/{id}', [NotificationController::class, 'show']);
+        // Route::post('notifications/create', [NotificationController::class, 'store']);
 
         Route::get('address', [AccountController::class, 'getAddress']);
         Route::post('address', [AccountController::class, 'addAddress']);

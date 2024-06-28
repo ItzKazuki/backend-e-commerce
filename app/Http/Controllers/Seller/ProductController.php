@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Seller;
 
+use App\Models\Upload;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Upload;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\Product\ProductCreated;
 
 class ProductController extends Controller
 {
@@ -57,7 +58,13 @@ class ProductController extends Controller
         // set productData to Product
         $product = Product::create($productData);
 
-        if(!$product) return redirect()->back()->with('error', 'Failed add product to database');
+        $request->user()->notify(new ProductCreated($request->user(), $product));
+
+        if(!$product) {
+            $request->user()->notify(new ProductCreated($request->user(), $product, 'failed'));
+
+            return redirect()->back()->with('error', 'Failed add product to database');
+        }
 
         return redirect()->route('seller.product.index')->with('success', 'Success add product to database');
     }

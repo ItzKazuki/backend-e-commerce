@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Payments;
 
+use App\Models\User;
 use App\Models\Order;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use Illuminate\Http\Request;
 use App\Services\MidtransService;
+use App\Http\Controllers\Controller;
+use App\Notifications\Order\OrderChanged;
+use App\Notifications\Payment\PaymentCancel;
+use App\Notifications\Payment\PaymentSuccess;
 
 class PaymentController extends Controller
 {
@@ -45,6 +49,11 @@ class PaymentController extends Controller
             'payment_status' => Payment::COMPLETED
         ]);
 
+        $user = User::findOrFail($order->user->id);
+
+        $order->user->notify(new PaymentSuccess(Payment::find($order->payment->id)));
+        $order->user->notify(new OrderChanged($user, $order, Order::PROCESSING));
+
         return view('payments.success', [
             'title' => 'Success',
             'order' => $order
@@ -65,6 +74,11 @@ class PaymentController extends Controller
             $order->payment()->update([
                 'payment_status' => Payment::CANCELLED
             ]);
+
+            $user = User::findOrFail($order->user->id);
+
+            $order->user->notify(new PaymentCancel($order));
+            $order->user->notify(new OrderChanged($user, $order, Order::CANCELLED));
 
             return view('payments.cancel', [
                 'title' => 'Cancel',
@@ -102,7 +116,7 @@ class PaymentController extends Controller
 
         $paymentStatus = $this->midtrans->getPaymentStatus($request->order_id);
 
-        if($paymentStatus['transaction_status'] == 'settlement') return redirect()->route('payments.success', ['order_id', $request->order_id]);
+        if ($paymentStatus['transaction_status'] == 'settlement') return redirect()->route('payments.success', ['order_id', $request->order_id]);
 
         return view('payments.pending', [
             'title' => 'Pending',

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api\Seller;
 
+use Exception;
 use App\Models\Upload;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Exception;
 use Illuminate\Support\Facades\Storage;
+use App\Notifications\Product\ProductCreated;
 
 /**
  * @group Seller
@@ -56,6 +57,8 @@ class ProductController extends Controller
 
             // set productData to Product
             $product = Product::create($productData);
+
+            $request->user()->notify(new ProductCreated($request->user(), $product));
 
             return $this->sendRes([
                 'message' => 'Product created successfully',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Invoice;
 use App\Models\Payment;
@@ -11,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Services\MidtransService;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Notifications\Order\OrderCreated;
+use App\Notifications\Order\OrderSellerCreated;
 
 /**
  * @group Orders
@@ -49,7 +52,7 @@ class OrdersController extends Controller
     {
         try {
             // TODO: fix this logic becouse all user can see by order id.
-            $order = Order::findOrFail($id);
+            $order = Order::where('customer_id', auth()->user()->id)->findOrFail($id);
 
             return $this->sendRes([
                 'order' => $order
@@ -71,6 +74,8 @@ class OrdersController extends Controller
         try {
             DB::beginTransaction();
 
+            $user = $request->user();
+
             $validateData = $request->validate([
                 'products' => 'required',
                 'payment_method' => 'required'
@@ -82,7 +87,7 @@ class OrdersController extends Controller
 
             // add history payment
             $payment = Payment::create([
-                'user_id' => auth()->user()->id,
+                'user_id' => $user->id,
                 'invoice_number' => 'INV',
                 'payment_method' => $validateData['payment_method'],
                 'payment_status' => Payment::PENDING,
@@ -91,7 +96,7 @@ class OrdersController extends Controller
 
             // add to orders
             $order = Order::create([
-                'customer_id' => auth()->user()->id,
+                'customer_id' => $user->id,
                 'payment_id' => $payment->id,
                 'shipping_address_id' => $request->user()->primaryAddress->id,
                 'shipping_cost' => Order::SHIPPING_COST,
@@ -130,7 +135,7 @@ class OrdersController extends Controller
             $invoice = Invoice::create([
                 'payment_id' => $payment->id,
                 'invoice_number' => 'INV/' . date('Y') . '/' . strtoupper(uniqid()),
-                'customer_name' => auth()->user()->name,
+                'customer_name' => $user->name,
                 'invoice_amount' => $order->total_price,
             ]);
 
@@ -140,6 +145,19 @@ class OrdersController extends Controller
             // do get snap token here
             $payment_redirect = $this->paymentMidtrans($payment, $products, $order);
 
+            // create notification
+
+            $user->notify(new OrderCreated($user, $order, $payment_redirect));
+
+            // Retrieve sellers associated with the order
+            $sellersID = $this->getSellersForOrder($order); // Implement this method
+
+            // Send notifications to each seller
+            foreach ($sellersID as $sellerId) {
+                $seller = User::findOrFail($sellerId);
+                $seller->notify(new OrderSellerCreated($order));
+            }
+
             DB::commit();
 
             return $this->sendRes([
@@ -147,26 +165,39 @@ class OrdersController extends Controller
                 'url' => $payment_redirect,
                 'order' => $order
             ]);
-
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->sendFailRes($e);
         }
     }
 
+    // Helper method to get sellers for the order
+    private function getSellersForOrder(Order $order)
+    {
+        $sellers = [];
+        foreach ($order->orderItems as $orderItem) {
+            $product = $orderItem->product;
+            $sellerId = $product->seller_id; // Assuming you have a 'seller_id' field in your Product model
+            if (!in_array($sellerId, $sellers)) {
+                $sellers[] = $sellerId;
+            }
+        }
+        return $sellers;
+    }
+
     public function paymentMidtrans($payment, $products, $order)
     {
         $params = $this->midtrans->paramsGenerator($products, $order);
 
-        if($order->payment_method == 'qris' || $payment->payment_method == 'qris') {
+        if ($order->payment_method == 'qris' || $payment->payment_method == 'qris') {
             return $this->midtrans->getPaymentMidtrans($params); // return redirect_url and token
         }
 
-        if($order->payment_method == 'gopay' || $payment->payment_method == 'gopay') {
+        if ($order->payment_method == 'gopay' || $payment->payment_method == 'gopay') {
             return $this->midtrans->getPaymentGopay($params); // return token, url, etc...
         }
 
-        if($order->payment_method == 'cod' || $payment->payment_method == 'cod') {
+        if ($order->payment_method == 'cod' || $payment->payment_method == 'cod') {
             return [
                 'redirect_url' => route('payment.wait-confirm', ['order_id' => $order->id])
             ];
