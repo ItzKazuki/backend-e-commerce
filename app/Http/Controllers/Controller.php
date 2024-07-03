@@ -20,6 +20,6 @@ abstract class Controller
             'code' => $e->getCode(),
             'file' => $e->getFile(),
             'line' => $e->getLine(),
-        ], $code);
+        ], gettype($e->getCode()) == 'integer' ? ($e->getCode() < 200 || $e->getCode() > 550 ? $code : $e->getCode()) : $code);
     }
 }

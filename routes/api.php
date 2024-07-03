@@ -7,11 +7,13 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\User\AccountController;
 use App\Http\Controllers\Api\Seller\SellerController;
+use App\Http\Controllers\Api\Auth\CodeCheckController;
 use App\Http\Controllers\Api\Payments\PaymentController;
+use App\Http\Controllers\Api\User\NotificationController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\Seller\OrdersController as SellerOrdersController;
 use App\Http\Controllers\Api\Seller\ProductController as SellerProductController;
-use App\Http\Controllers\Api\User\NotificationController;
 
 /**
  * Route utama
@@ -38,7 +40,10 @@ Route::prefix('v1')->middleware('api')->group(function () {
     Route::prefix('auth')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
         Route::post('register', [AuthController::class, 'register']);
-        Route::post('reset-password', [ResetPasswordController::class, 'resetPassword']);
+        Route::post('password/reset', [ResetPasswordController::class, '__invoke']);
+        Route::post('password/email',  [ForgotPasswordController::class, '__invoke']);
+        Route::post('password/code/check', [CodeCheckController::class, '__invoke']);
+
         Route::middleware('auth:sanctum')->post('logout', [AuthController::class, 'logout']);
     });
 

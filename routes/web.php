@@ -16,8 +16,15 @@ use App\Http\Controllers\Seller\ProductController as SellerProductController;
 use App\Http\Controllers\Seller\DashboardController as SellerDashboardController;
 use App\Http\Controllers\Seller\NotificationsController as SellerNotificationsController;
 use App\Http\Controllers\Admin\NotificationsController as AdminNotificationsController;
+use Illuminate\Support\Facades\Mail;
 
 Route::get('app/health', HealthCheckResultsController::class);
+
+Route::get('/send/mail', function () {
+    Mail::raw('Hello World!', function ($msg) {
+        $msg->to('chaezaibnuakbar@gmail.com')->subject('Test Email');
+    });
+});
 
 Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
     Route::get('wait-confirm', [PaymentController::class, 'waitConfirm'])->name('wait-confirm');

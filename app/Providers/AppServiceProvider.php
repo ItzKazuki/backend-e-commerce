@@ -32,10 +32,10 @@ class AppServiceProvider extends ServiceProvider
             DebugModeCheck::new(),
             PingCheck::new()
                 ->url('https://google.com')
-                ->name('Is Google reachable?'),
+                ->name('Is Internet Reachable?'),
             PingCheck::new()
                 ->url(config('app.frontend_url'))
-                ->name('Is Frontend reachable?'),
+                ->name('Is Frontend Reachable?'),
         ]);
     }
 }
