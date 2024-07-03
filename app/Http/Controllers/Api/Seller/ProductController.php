@@ -42,13 +42,14 @@ class ProductController extends Controller
                 'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
             ]);
 
-            $imagePath = $request->file('product_image')->store('assets/products');
+            $imagePath = $request->file('product_image')->store('uploads/products');
 
             $imageUrl = Storage::url($imagePath);
 
             // set imageUrl to Upload
             $uplaodDetail = Upload::create([
                 'image' => $imageUrl,
+                'file_name' => basename($imagePath),
                 'user_id' => $request->user()->id
             ]);
 
@@ -64,7 +65,6 @@ class ProductController extends Controller
                 'message' => 'Product created successfully',
                 'product' => $product
             ]);
-
         } catch (\Exception $e) {
             return $this->sendFailRes($e, 400);
         }
@@ -87,7 +87,7 @@ class ProductController extends Controller
         try {
             $product = Product::find($id);
 
-            if(!$product) throw new Exception('Product not found', 404);
+            if (!$product) throw new Exception('Product not found', 404);
 
             $productData = $request->validate([
                 'product_name' => 'string|max:100',
@@ -98,18 +98,19 @@ class ProductController extends Controller
                 'product_image' => 'image|mimes:jpeg,png,jpg|max:2048'
             ]);
 
-            if(isset($request->product_image)){
-                $imagePath = $request->file('product_image')->store('assets/products');
+            if (isset($request->product_image)) {
+                $imagePath = $request->file('product_image')->store('uploads/products');
                 $imageUrl = Storage::url($imagePath);
 
                 // set imageUrl to Upload
                 $uplaodDetail = Upload::create([
                     'image' => $imageUrl,
+                    'file_name' => basename($imagePath),
                     'user_id' => $request->user()->id
                 ]);
             }
 
-            if(isset($request->product_image)){
+            if (isset($request->product_image)) {
                 $productData['upload_id'] = $uplaodDetail->id;
             }
 
@@ -119,7 +120,6 @@ class ProductController extends Controller
                 'message' => 'Product updated successfully',
                 'product' => $product
             ]);
-
         } catch (Exception $e) {
             return $this->sendFailRes($e);
         }
@@ -138,10 +138,11 @@ class ProductController extends Controller
             $product = Product::findOrFail($id);
             $product->delete();
 
+            $product->upload->delete();
+
             return $this->sendRes([
                 'message' => 'Product deleted successfully'
             ]);
-
         } catch (\Exception $e) {
             return $this->sendFailRes($e, 401);
         }

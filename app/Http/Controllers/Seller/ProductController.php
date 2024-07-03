@@ -43,12 +43,13 @@ class ProductController extends Controller
             'product_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        $imagePath = $request->file('product_image')->store('assets/products');
+        $imagePath = $request->file('product_image')->store('uploads/products');
         $imageUrl = Storage::url($imagePath);
 
         // set imageUrl to Upload
         $uplaodDetail = Upload::create([
             'image' => $imageUrl,
+            'file_name' => basename($imagePath),
             'user_id' => $request->user()->id
         ]);
 
@@ -60,7 +61,7 @@ class ProductController extends Controller
 
         $request->user()->notify(new ProductCreated($request->user(), $product));
 
-        if(!$product) {
+        if (!$product) {
             $request->user()->notify(new ProductCreated($request->user(), $product, 'failed'));
 
             return redirect()->back()->with('error', 'Failed add product to database');
@@ -102,15 +103,16 @@ class ProductController extends Controller
             'product_image' => 'image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
-        if(!$product) return redirect()->back()->with('error', 'Product not found');
+        if (!$product) return redirect()->back()->with('error', 'Product not found');
 
-        if(isset($request->product_image)){
-            $imagePath = $request->file('product_image')->store('assets/products');
+        if (isset($request->product_image)) {
+            $imagePath = $request->file('product_image')->store('uploads/products');
             $imageUrl = Storage::url($imagePath);
 
             // set imageUrl to Upload
             $uplaodDetail = Upload::create([
                 'image' => $imageUrl,
+                'file_name' => basename($imagePath),
                 'user_id' => $request->user()->id
             ]);
         }
@@ -121,7 +123,7 @@ class ProductController extends Controller
         $product->stock = $productData['stock'];
         $product->brand = $productData['brand'];
 
-        if(isset($request->product_image)){
+        if (isset($request->product_image)) {
             $product->upload_id = $uplaodDetail->id;
         }
 
@@ -136,6 +138,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+        $product->upload->delete();
         return redirect()->route('seller.product.index')->with('success', 'Success delete product to database');
     }
 }

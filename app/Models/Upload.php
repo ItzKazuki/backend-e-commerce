@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Upload extends Model
 {
@@ -11,6 +12,7 @@ class Upload extends Model
 
     protected $fillable = [
         'image',
+        'file_name',
         'user_id' // user who upload that
     ];
 
@@ -24,6 +26,14 @@ class Upload extends Model
         static::creating(function ($model) {
             if (empty($model->{$model->getKeyName()})) {
                 $model->{$model->getKeyName()} = 'UP-' . strtoupper(uniqid());
+            }
+        });
+
+        // Delete associated file when Upload is deleted
+        static::deleting(function ($model) {
+            $filePath = str_replace(Storage::url(''), '', $model->image); // Get the file path relative to the storage disk
+            if (Storage::exists($filePath)) {
+                Storage::delete($filePath);
             }
         });
     }
