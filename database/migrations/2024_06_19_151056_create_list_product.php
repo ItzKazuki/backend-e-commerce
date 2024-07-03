@@ -31,7 +31,7 @@ return new class extends Migration
             $table->bigInteger('price');
             $table->string('brand');
             $table->foreign('seller_id')->references('id')->on('users');
-            $table->foreign('upload_id')->references('id')->on('uploads')->onDelete('set null');
+            $table->foreign('upload_id')->references('id')->on('uploads');
             $table->timestamps();
         });
     }
