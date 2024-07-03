@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Seller - {{config('app.name')}}</title>
+    <title>Seller - {{ config('app.name') }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -40,7 +40,7 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="{{ route('seller.dashboard') }}" class="logo d-flex align-items-center">
                 <img src="{{ asset('/assets/img/logo.png') }}" alt="">
-                <span class="d-none d-lg-block">{{config('app.name')}}</span>
+                <span class="d-none d-lg-block">{{ config('app.name') }}</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
@@ -149,8 +149,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
                     href="#">
-                    <i class="bi bi-cart3"></i><span>Orders</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-cart3"></i><span>Orders</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
@@ -194,13 +193,29 @@
     </aside><!-- End Sidebar-->
 
     <main id="main" class="main">
+        @session('success')
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-1"></i>
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endsession
+
+        @session('error')
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-octagon me-1"></i>
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endsession
+
         @yield('content')
     </main><!-- End #main -->
 
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong><span>{{config('app.name')}}</span></strong>. All Rights Reserved
+            &copy; Copyright <strong><span>{{ config('app.name') }}</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>

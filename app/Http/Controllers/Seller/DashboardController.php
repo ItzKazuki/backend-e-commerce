@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         $sales = Order::whereHas('orderItems.product.seller', function ($query) {
             $query->where('id', auth()->user()->id);
-        })->get();
+        })->take(10)->get();
 
         $salesSum = $sales->sum('total_price');
 
@@ -52,11 +52,11 @@ class DashboardController extends Controller
             ->whereDate('created_at', Carbon::yesterday())
             ->count();
 
-        $previousMonthRevenue = Order::whereHas('orderItems.product.seller', function ($query) {
+        $previousMonthRevenue = intval(Order::whereHas('orderItems.product.seller', function ($query) {
             $query->where('id', auth()->user()->id);
         })
             ->whereMonth('created_at', Carbon::now()->subMonth()->month)
-            ->sum('total_price');
+            ->sum('total_price'));
 
         $previousYearCustomers = Order::whereHas('orderItems.product.seller', function ($query) {
             $query->where('id', auth()->user()->id);
@@ -68,8 +68,9 @@ class DashboardController extends Controller
 
         // Calculate percentage changes
         $salesIncrease = $previousDaySales > 0 ? (($countSalesToday - $previousDaySales) / $previousDaySales * 100) : 0;
-        $revenueIncrease = $previousMonthRevenue > 0 ? (($revenue - $previousMonthRevenue) / $previousMonthRevenue * 100) : 0;
+        $revenueIncrease = $previousMonthRevenue > 0 ? (($salesSum - $previousMonthRevenue) / $previousMonthRevenue * 100) : 0;
         $customerIncrease = $previousYearCustomers > 0 ? (($userCount - $previousYearCustomers) / $previousYearCustomers * 100) : 0;
+
 
         return view('sellers.dashboard', [
             'sales' => $sales,

@@ -13,14 +13,6 @@
         </nav>
     </div>
 
-    @session('error')
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-octagon me-1"></i>
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endsession
-
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Create New Product Form</h5>
