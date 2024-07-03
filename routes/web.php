@@ -20,12 +20,6 @@ use Illuminate\Support\Facades\Mail;
 
 Route::get('app/health', HealthCheckResultsController::class);
 
-Route::get('/send/mail', function () {
-    Mail::raw('Hello World!', function ($msg) {
-        $msg->to('chaezaibnuakbar@gmail.com')->subject('Test Email');
-    });
-});
-
 Route::group(['prefix' => 'payment', 'as' => 'payment.'], function () {
     Route::get('wait-confirm', [PaymentController::class, 'waitConfirm'])->name('wait-confirm');
     Route::get('process', [PaymentController::class, 'process'])->name('process');
